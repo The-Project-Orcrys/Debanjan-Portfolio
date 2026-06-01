@@ -9,12 +9,24 @@ export const ROUTES = {
   work: "/work",
   contact: "/contact",
   products: "/#products",
+  engage: "/#engage",
+  timeline: "/#timeline",
   studio: "/studio",
 } as const;
 
 export const NAV_LINKS = [
   { href: ROUTES.about, label: "About" },
   { href: ROUTES.work, label: "Work" },
+  { href: ROUTES.products, label: "Ventures" },
+  { href: ROUTES.contact, label: "Contact" },
+] as const;
+
+export const FOOTER_EXPLORE_LINKS = [
+  { href: ROUTES.home, label: "Home" },
+  { href: ROUTES.about, label: "About" },
+  { href: ROUTES.work, label: "Work" },
+  { href: ROUTES.products, label: "Ventures" },
+  { href: ROUTES.engage, label: "Partner with me" },
   { href: ROUTES.contact, label: "Contact" },
 ] as const;
 

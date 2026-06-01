@@ -1,6 +1,8 @@
 import { ContactChannelCard } from "@/components/contact/ContactChannelCard";
 import { ContactForm } from "@/components/shared/ContactForm";
-import { CONTACT, mapsHref, phoneHref } from "@/lib/data/contact";
+import { FounderActionLinks } from "@/components/shared/FounderActionLinks";
+import { CopyEmailButton } from "@/components/shared/CopyEmailButton";
+import { CONTACT, mapsHref, phoneHref, whatsappHref } from "@/lib/data/contact";
 import type { SiteSettings } from "@/types/content";
 
 export function ContactPageSection({ settings }: { settings: SiteSettings }) {
@@ -21,6 +23,16 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
       value: settings.phone ?? CONTACT.phone,
       href: phoneHref(settings.phone ?? CONTACT.phone),
       description: "Call or message for urgent conversations and scheduling.",
+    },
+    {
+      label: "WhatsApp",
+      value: "Message on WhatsApp",
+      href: whatsappHref(
+        settings.phone ?? CONTACT.phone,
+        "Hi Debanjan — I'd like to discuss a partnership or role.",
+      ),
+      description: "Fastest way to reach me for scheduling and brief intros.",
+      external: true,
     },
     {
       label: linkedIn.fullName,
@@ -58,6 +70,7 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
         <p className="mt-4 text-sm text-text-secondary">
           Typical response time: 1–2 business days
         </p>
+        <FounderActionLinks className="mt-6" primary />
       </section>
 
       {/* Channels */}
@@ -71,7 +84,7 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
         >
           Direct channels
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {channels.map((channel) => (
             <ContactChannelCard
               key={channel.label}
@@ -94,6 +107,7 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
           >
             {settings.email}
           </a>
+          <CopyEmailButton email={settings.email} />
           <p className="mt-4 max-w-xl text-sm text-text-secondary">
             Based at {CONTACT.officeShort}. Working with teams globally — remote
             and on-site when needed.

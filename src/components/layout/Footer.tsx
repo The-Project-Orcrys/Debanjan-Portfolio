@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { FooterBackground } from "@/components/layout/FooterBackground";
 import { FooterLogoMark } from "@/components/layout/FooterLogoMark";
+import { FOOTER_EXPLORE_LINKS } from "@/config/site";
 import { ContactLinks } from "@/components/shared/ContactLinks";
+import { FounderActionTextLinks } from "@/components/shared/FounderActionLinks";
 import type { SiteSettings } from "@/types/content";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
@@ -14,7 +17,28 @@ export function Footer({ settings }: { settings: SiteSettings }) {
 
       <div className="section-padding-compact relative">
         <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-3">
+            <p className="text-xs uppercase tracking-widest text-text-secondary">
+              Explore
+            </p>
+            <ul className="mt-3 flex flex-col gap-2 text-sm">
+              {FOOTER_EXPLORE_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-text-primary underline-offset-4 hover:text-text-accent hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5">
+              <FounderActionTextLinks />
+            </div>
+          </div>
+
+          <div className="lg:col-span-4">
             <p className="text-xs uppercase tracking-widest text-text-secondary">
               Built with
             </p>
@@ -25,7 +49,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             </ul>
           </div>
 
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <p className="text-xs uppercase tracking-widest text-text-secondary">
               Contact
             </p>

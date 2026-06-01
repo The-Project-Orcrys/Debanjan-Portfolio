@@ -11,6 +11,8 @@ export const contactSchema = z.object({
   message: z.string().min(20, "Tell me more — at least 20 characters"),
   budget: z.string().optional(),
   timeline: z.string().optional(),
+  /** Honeypot — must stay empty */
+  website: z.string().max(0).optional(),
 });
 
 export type ContactSchema = z.infer<typeof contactSchema>;

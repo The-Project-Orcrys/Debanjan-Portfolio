@@ -1,8 +1,15 @@
+import { Suspense } from "react";
 import { ContactPageSection } from "@/components/contact/ContactPageSection";
+import { FaqSection } from "@/components/contact/FaqSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CONTACT } from "@/lib/data/contact";
+import { contactFaq } from "@/lib/data/founder";
 import { getSiteSettings } from "@/lib/data/fetch";
-import { buildBreadcrumbSchema, buildContactPageSchema } from "@/lib/seo/jsonld";
+import {
+  buildBreadcrumbSchema,
+  buildContactPageSchema,
+  buildFaqPageSchema,
+} from "@/lib/seo/jsonld";
 import { keywordsForContact } from "@/lib/seo/keywords";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -22,6 +29,7 @@ export default async function ContactPage() {
 
   const schema = [
     buildContactPageSchema(settings),
+    buildFaqPageSchema(contactFaq),
     buildBreadcrumbSchema([
       { name: "Home", path: "/" },
       { name: "Contact", path: "/contact" },
@@ -31,7 +39,10 @@ export default async function ContactPage() {
   return (
     <>
       <JsonLd data={schema} />
-      <ContactPageSection settings={settings} />
+      <Suspense>
+        <ContactPageSection settings={settings} />
+      </Suspense>
+      <FaqSection />
     </>
   );
 }

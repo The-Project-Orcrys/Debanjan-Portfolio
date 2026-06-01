@@ -17,9 +17,17 @@ export default function NotFound() {
     <section className="section-padding flex min-h-[60vh] flex-col justify-center">
       <h1 className="text-display text-h1">404</h1>
       <p className="mt-4 text-text-secondary">This page doesn&apos;t exist.</p>
-      <Link href="/" className="mt-8 text-text-accent underline">
-        Back home
-      </Link>
+      <div className="mt-8 flex flex-wrap gap-4">
+        <Link href="/" className="text-text-accent underline">
+          Back home
+        </Link>
+        <Link href="/contact" className="text-text-secondary underline hover:text-text-accent">
+          Contact
+        </Link>
+        <Link href="/work" className="text-text-secondary underline hover:text-text-accent">
+          View work
+        </Link>
+      </div>
     </section>
   );
 }

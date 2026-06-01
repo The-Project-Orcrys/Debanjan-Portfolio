@@ -9,6 +9,7 @@ import { AnimatedHeroBackground } from "@/components/motion/AnimatedHeroBackgrou
 import { useHeroMouseParallax } from "@/components/motion/useHeroMouseParallax";
 import { GeometricShape } from "@/components/shared/GeometricShape";
 import { CopyTag } from "@/components/shared/CopyTag";
+import { FounderActionLinks } from "@/components/shared/FounderActionLinks";
 import { LottiePlayer } from "@/components/shared/LottiePlayer";
 import { HERO, ROUTES } from "@/config/site";
 import { ventureQuickLinks } from "@/lib/data/products";
@@ -183,20 +184,23 @@ export function HeroSection({
               <span className="hero-name-line">{renderName(settings.lastName)}</span>
             </h1>
 
-            <div className="hero-ctas mt-8 flex flex-wrap items-center gap-3 md:mt-10">
-              <Link href="/work" className="hero-cta-primary">
-                View work
-                <span aria-hidden>→</span>
-              </Link>
-              <Link href="/contact" className="hero-cta-secondary">
-                Get in touch
-              </Link>
-              <Link
-                href={ROUTES.products}
-                className="text-sm uppercase tracking-widest text-text-secondary underline-offset-4 transition hover:text-text-accent hover:underline"
-              >
-                Ventures
-              </Link>
+            <div className="hero-ctas mt-8 flex flex-col gap-4 md:mt-10">
+              <div className="flex flex-wrap items-center gap-3">
+                <Link href="/work" className="hero-cta-primary">
+                  View work
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link href="/contact" className="hero-cta-secondary">
+                  Get in touch
+                </Link>
+                <Link
+                  href={ROUTES.products}
+                  className="text-sm uppercase tracking-widest text-text-secondary underline-offset-4 transition hover:text-text-accent hover:underline"
+                >
+                  Ventures
+                </Link>
+              </div>
+              <FounderActionLinks />
             </div>
 
             <ul className="hero-stats mt-6 border-t border-white/10 pt-5 text-sm sm:mt-8 sm:flex sm:flex-wrap sm:gap-6 sm:pt-6 md:mt-10">

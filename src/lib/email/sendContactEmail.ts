@@ -1,9 +1,16 @@
 import { ContactEmailTemplate } from "@/components/emails/ContactEmailTemplate";
 import type { ContactSchema } from "@/lib/validation";
 
+function contactPayload(data: ContactSchema) {
+  const { website: _honeypot, ...payload } = data;
+  return payload;
+}
+
 export async function sendContactEmail(data: ContactSchema) {
+  const payload = contactPayload(data);
+
   if (!process.env.RESEND_API_KEY) {
-    console.info("[contact] Resend not configured — mock send:", data);
+    console.info("[contact] Resend not configured — mock send:", payload);
     return { id: "mock" };
   }
 
@@ -20,7 +27,7 @@ export async function sendContactEmail(data: ContactSchema) {
   return resend.emails.send({
     from,
     to,
-    subject: `New inquiry from ${data.name}`,
-    react: ContactEmailTemplate(data),
+    subject: `New inquiry from ${payload.name}`,
+    react: ContactEmailTemplate(payload),
   });
 }

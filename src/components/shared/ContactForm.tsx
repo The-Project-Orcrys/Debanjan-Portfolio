@@ -1,24 +1,53 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { INQUIRY_TYPES } from "@/config/site";
 import { submitContactForm } from "@/app/actions/contact";
 import { trackContactSubmitted } from "@/lib/analytics/events";
-import { contactSchema, INQUIRY_TYPES, type ContactSchema } from "@/lib/validation";
+import { contactSchema, type ContactSchema } from "@/lib/validation";
 import { cn } from "@/lib/utils";
 
-export function ContactForm() {
+function inquiryFromSearch(params: URLSearchParams): ContactSchema["projectType"] {
+  const raw = params.get("inquiry") ?? params.get("type");
+  if (!raw) return "General Inquiry";
+  const decoded = decodeURIComponent(raw);
+  if (INQUIRY_TYPES.includes(decoded as ContactSchema["projectType"])) {
+    return decoded as ContactSchema["projectType"];
+  }
+  return "General Inquiry";
+}
+
+function ContactFormSkeleton() {
+  return (
+    <div className="w-full space-y-6 animate-pulse" aria-hidden>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="h-12 rounded bg-white/5" />
+      ))}
+      <div className="h-12 w-40 rounded-full bg-white/10" />
+    </div>
+  );
+}
+
+function ContactFormFields() {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<ContactSchema>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { projectType: "General Inquiry" },
+    defaultValues: { projectType: "General Inquiry", website: "" },
   });
+
+  useEffect(() => {
+    setValue("projectType", inquiryFromSearch(searchParams));
+  }, [searchParams, setValue]);
 
   const onSubmit = async (data: ContactSchema) => {
     setStatus("idle");
@@ -48,6 +77,14 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        className="pointer-events-none absolute h-0 w-0 opacity-0"
+        {...register("website")}
+      />
       <div>
         <label className="text-sm text-text-secondary" htmlFor="name">
           Name
@@ -158,5 +195,13 @@ export function ContactForm() {
         <p className="text-red-400">Something went wrong. Please try again.</p>
       )}
     </form>
+  );
+}
+
+export function ContactForm() {
+  return (
+    <Suspense fallback={<ContactFormSkeleton />}>
+      <ContactFormFields />
+    </Suspense>
   );
 }

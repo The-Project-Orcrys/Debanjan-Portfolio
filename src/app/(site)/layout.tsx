@@ -2,6 +2,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { LenisProvider } from "@/components/motion/LenisProvider";
+import { BackToTop } from "@/components/shared/BackToTop";
+import { StickyMobileContact } from "@/components/shared/StickyMobileContact";
 import { getSiteSettings } from "@/lib/data/fetch";
 
 export default async function SiteLayout({
@@ -18,11 +20,13 @@ export default async function SiteLayout({
       </a>
       <Navbar settings={settings} />
       <PageTransition>
-        <main id="main" className="flex flex-col">
+        <main id="main" className="flex flex-col pb-[4.5rem] md:pb-0">
           {children}
         </main>
       </PageTransition>
       <Footer settings={settings} />
+      <StickyMobileContact email={settings.email} />
+      <BackToTop />
     </LenisProvider>
   );
 }

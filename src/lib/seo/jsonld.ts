@@ -1,3 +1,4 @@
+import { defaultProducts } from "@/lib/data/products";
 import type { SiteSettings, WorkProject } from "@/types/content";
 import { buildCanonical, getSiteUrl } from "@/lib/seo/config";
 
@@ -38,7 +39,12 @@ export function buildPersonSchema(settings: SiteSettings, siteUrl: string) {
       "Cybersecurity",
       "Strategic Planning",
     ],
-    sameAs: settings.socialLinks.map((s) => s.url).filter(Boolean),
+    sameAs: [
+      ...new Set([
+        ...settings.socialLinks.map((s) => s.url).filter(Boolean),
+        ...defaultProducts.map((p) => p.url),
+      ]),
+    ],
   };
 }
 
@@ -171,6 +177,23 @@ export function buildWebPageSchema(options: {
     isPartOf: { "@id": `${siteUrl}/#website` },
     about: { "@id": `${siteUrl}/#person` },
     inLanguage: "en-US",
+  };
+}
+
+export function buildFaqPageSchema(
+  items: { question: string; answer: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 

@@ -14,6 +14,13 @@ export function phoneHref(phone: string) {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
 
+/** WhatsApp deep link (India +91 numbers supported). */
+export function whatsappHref(phone: string, prefilledMessage?: string) {
+  const digits = phone.replace(/\D/g, "");
+  if (!prefilledMessage) return `https://wa.me/${digits}`;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(prefilledMessage)}`;
+}
+
 export function mapsHref(address: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }

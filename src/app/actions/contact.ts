@@ -9,6 +9,10 @@ export async function submitContactForm(data: unknown) {
     return { error: parsed.error.flatten() };
   }
 
+  if (parsed.data.website) {
+    return { success: true as const };
+  }
+
   try {
     await sendContactEmail(parsed.data);
     return { success: true as const };

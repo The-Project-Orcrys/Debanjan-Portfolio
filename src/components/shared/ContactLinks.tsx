@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LinkedInButton } from "@/components/shared/LinkedInButton";
-import { CONTACT, mapsHref, phoneHref } from "@/lib/data/contact";
+import { CONTACT, mapsHref, phoneHref, whatsappHref } from "@/lib/data/contact";
 import { cn } from "@/lib/utils";
 import type { SiteSettings } from "@/types/content";
 
@@ -23,16 +23,31 @@ export function ContactLinks({
     (s) => !s.url.includes("linkedin.com"),
   );
 
+  const phone = settings.phone ?? CONTACT.phone;
+  const whatsapp = whatsappHref(phone);
+
   if (variant === "compact") {
     return (
       <ul className="space-y-2.5 text-sm">
-        {settings.phone ? (
+        {phone ? (
           <li>
             <a
-              href={phoneHref(settings.phone)}
+              href={phoneHref(phone)}
               className="text-text-primary transition hover:text-text-accent"
             >
-              {settings.phone}
+              {phone}
+            </a>
+          </li>
+        ) : null}
+        {phone ? (
+          <li>
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-primary transition hover:text-text-accent"
+            >
+              WhatsApp ↗
             </a>
           </li>
         ) : null}
@@ -84,13 +99,22 @@ export function ContactLinks({
 
   return (
     <ul className={cn("space-y-2 text-sm")}>
-      {settings.phone ? (
+      {phone ? (
+        <li>
+          <a href={phoneHref(phone)} className="hover:text-text-accent">
+            {phone}
+          </a>
+        </li>
+      ) : null}
+      {phone ? (
         <li>
           <a
-            href={phoneHref(settings.phone)}
+            href={whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-text-accent"
           >
-            {settings.phone}
+            WhatsApp
           </a>
         </li>
       ) : null}

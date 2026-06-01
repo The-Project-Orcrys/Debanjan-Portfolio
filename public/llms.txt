@@ -1,0 +1,28 @@
+# Debanjan Sandhaki — Executive Portfolio
+
+> Founder · CPO · CEO building category-defining platforms at Orcrys, Mewayz, and PhantomX.
+
+## Contact
+- Email: ceo@orcrys.com
+- Phone: +91 85973 31075
+- LinkedIn: https://www.linkedin.com/in/debanjan-sandhaki-a02a5532a/
+- Office: Ecospace, Newtown, Kolkata, West Bengal 700160, India
+
+## Primary pages
+- Home: /
+- About: /about
+- Work (case studies): /work
+- Contact: /contact
+
+## Ventures & products
+- Orcrys: https://orcrys.com/
+- Mewayz: https://mewayz.com/
+- Mewayz India: https://inda.mewayz.com/
+- Edquate: https://edquate.com/
+- PhantomX: https://www.phantomx.tech/
+
+## Engagement types
+Product leadership, venture partnerships, brand & growth consulting, cybersecurity initiatives, speaking & advisory.
+
+## Site
+Built with Next.js. Canonical URL from NEXT_PUBLIC_SITE_URL when deployed.

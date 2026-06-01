@@ -13,6 +13,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  if (result.data.website) {
+    return NextResponse.json({ success: true, tracked: false });
+  }
+
   try {
     await sendContactEmail(result.data);
     return NextResponse.json({ success: true, tracked: true });
