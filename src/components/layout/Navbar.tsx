@@ -59,8 +59,10 @@ export function Navbar({
   }, [lenis]);
 
   useEffect(() => {
-    setOpen(false);
+    queueMicrotask(() => setOpen(false));
   }, [pathname]);
+
+  const isHome = pathname === "/";
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -77,24 +79,25 @@ export function Navbar({
             "pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full border px-3 py-2.5 transition-all duration-500 ease-out sm:gap-4 sm:px-5 sm:py-3",
             scrolled
               ? "border-white/15 bg-bg-primary/92 shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl"
-              : "border-white/10 bg-bg-primary/55 backdrop-blur-md",
+              : isHome
+                ? "border-white/10 bg-bg-primary/35 shadow-[0_4px_24px_rgba(0,0,0,0.25)] backdrop-blur-md"
+                : "border-white/10 bg-bg-primary/55 backdrop-blur-md",
           )}
         >
           <Link
             href="/"
-            className="text-display shrink-0 text-base tracking-tight transition hover:text-text-accent sm:text-lg"
+            scroll
+            className="relative z-30 shrink-0 rounded-full border border-transparent px-2 py-1 text-display whitespace-nowrap text-[0.8125rem] leading-tight tracking-tight transition hover:border-white/15 hover:bg-white/[0.04] hover:text-text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-accent min-[380px]:px-2.5 min-[380px]:text-sm sm:text-lg"
+            aria-label={`${settings.firstName} ${settings.lastName} — back to home`}
           >
-            <span className="hidden sm:inline">
-              {settings.firstName} {settings.lastName}
-            </span>
-            <span className="sm:hidden">{settings.firstName}</span>
+            {settings.firstName} {settings.lastName}
           </Link>
 
           <nav
-            className="absolute left-1/2 hidden -translate-x-1/2 md:flex"
+            className="pointer-events-none absolute left-1/2 z-10 hidden -translate-x-1/2 md:flex"
             aria-label="Primary"
           >
-            <ul className="flex items-center gap-1 rounded-full bg-white/[0.04] p-1">
+            <ul className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/[0.04] p-1">
               {navLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
@@ -195,7 +198,7 @@ export function Navbar({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed inset-x-3 top-[4.25rem] z-50 overflow-hidden rounded-3xl border border-white/10 bg-bg-primary/95 shadow-[0_24px_80px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
+              className="fixed inset-x-3 top-[var(--site-nav-height)] z-50 overflow-hidden rounded-3xl border border-white/10 bg-bg-primary/95 shadow-[0_24px_80px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
             >
               <nav className="flex flex-col p-4" aria-label="Mobile">
                 {navLinks.map((link, i) => (

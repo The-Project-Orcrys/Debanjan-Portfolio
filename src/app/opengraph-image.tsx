@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { ImageResponse } from "next/og";
 import { getSiteSettings } from "@/lib/data/fetch";
-import { portraitImagePath } from "@/lib/site/og-image";
+import { portraitImagePath } from "@/lib/site.server";
 
 export const runtime = "nodejs";
 export const alt = "Debanjan Sandhaki — Founder · CPO · CEO";

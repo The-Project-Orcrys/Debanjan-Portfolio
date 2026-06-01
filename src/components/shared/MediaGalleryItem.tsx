@@ -1,6 +1,10 @@
 "use client";
 
 import { PortfolioImage } from "@/components/shared/PortfolioImage";
+import {
+  PORTRAIT_OBJECT_POSITION,
+  serviceImageObjectPosition,
+} from "@/lib/images";
 import { VideoLoop } from "@/components/shared/VideoLoop";
 import { cn } from "@/lib/utils";
 import type { GalleryItem } from "@/types/content";
@@ -9,10 +13,13 @@ export function MediaGalleryItem({
   item,
   sizes = "(max-width: 768px) 100vw, 33vw",
   className,
+  portraitFocus = false,
 }: {
   item: GalleryItem;
   sizes?: string;
   className?: string;
+  /** Bias crop toward upper third (faces in portrait photos). */
+  portraitFocus?: boolean;
 }) {
   return (
     <div
@@ -28,6 +35,13 @@ export function MediaGalleryItem({
           src={item.imageUrl}
           alt={item.alt}
           sizes={sizes}
+          objectPosition={
+            portraitFocus && item.imageUrl?.includes("/services/")
+              ? serviceImageObjectPosition(item.imageUrl)
+              : portraitFocus
+                ? PORTRAIT_OBJECT_POSITION
+                : "center"
+          }
           className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
         />
       ) : null}

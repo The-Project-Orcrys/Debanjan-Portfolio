@@ -16,12 +16,11 @@ export function FounderActionLinks({
 }: Props) {
   if (!resumeUrl && !calendarUrl) return null;
 
-  const resumeClass = primary ? "hero-cta-primary" : "hero-cta-secondary";
   const calendarClass = primary ? "hero-cta-secondary" : "hero-cta-secondary";
 
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      {resumeUrl ? (
+      {/* {resumeUrl ? (
         <a
           href={resumeUrl}
           className={resumeClass}
@@ -31,7 +30,7 @@ export function FounderActionLinks({
         >
           Download résumé
         </a>
-      ) : null}
+      ) : null} */}
       {resumeUrl ? (
         <Link href={ROUTES.resume} className="text-sm uppercase tracking-widest text-text-secondary underline-offset-4 hover:text-text-accent hover:underline">
           Résumé page
@@ -66,7 +65,7 @@ export function FounderActionTextLinks({
     <ul className={`flex flex-col gap-2 text-sm ${className}`}>
       {resumeUrl ? (
         <>
-          <li>
+          {/* <li>
             <a
               href={resumeUrl}
               className="text-text-primary underline-offset-4 hover:text-text-accent hover:underline"
@@ -76,7 +75,7 @@ export function FounderActionTextLinks({
             >
               Résumé (PDF)
             </a>
-          </li>
+          </li> */}
           <li>
             <Link
               href={ROUTES.resume}

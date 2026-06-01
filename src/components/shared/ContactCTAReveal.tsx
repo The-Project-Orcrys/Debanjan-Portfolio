@@ -1,6 +1,8 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
+import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useTextReveal } from "@/components/motion/useTextReveal";
 import { ContactChannel } from "@/components/shared/ContactChannel";
 import { LinkedInButton } from "@/components/shared/LinkedInButton";
@@ -20,16 +22,58 @@ export function ContactCTAReveal({
   subtext = "from global platforms to early-stage ventures.",
 }: ContactCTARevealProps) {
   const ref = useTextReveal(".text-reveal-line", { stagger: 0.1 });
+  const channelsRef = useRef<HTMLDivElement>(null);
   const linkedIn =
     settings.socialLinks.find((s) => s.url.includes("linkedin.com"))?.url ??
     CONTACT.linkedinUrl;
 
+  useLayoutEffect(() => {
+    const el = channelsRef.current;
+    if (!el) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let ctx: { revert: () => void } | undefined;
+    void (async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        gsap.from(el.querySelectorAll(".contact-channel-reveal"), {
+          opacity: 0,
+          y: 16,
+          duration: 0.55,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            once: true,
+          },
+        });
+      }, el);
+    })();
+
+    return () => ctx?.revert();
+  }, []);
+
   return (
     <section
+      id="contact-cta"
       ref={ref as React.RefObject<HTMLElement>}
-      className="section-padding-tight-bottom border-t border-white/10"
+      className="contact-cta relative section-padding-tight-bottom border-t border-white/10"
     >
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-16">
+      <div
+        className="contact-cta__spotlight pointer-events-none absolute inset-0 opacity-60"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 40% at 20% 30%, rgba(26, 58, 255, 0.14), transparent 70%), radial-gradient(ellipse 40% 35% at 80% 60%, rgba(200, 184, 255, 0.08), transparent 65%)",
+        }}
+      />
+      <div className="ambient-noise pointer-events-none" aria-hidden />
+
+      <div className="relative z-[1] grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-16">
         <div>
           <TextSplit
             as="h2"
@@ -55,6 +99,7 @@ export function ContactCTAReveal({
               <Link
                 href={`mailto:${settings.email}`}
                 className="contact-cta-primary"
+                data-cursor="pointer"
               >
                 Let&apos;s talk
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -65,55 +110,64 @@ export function ContactCTAReveal({
                   />
                 </svg>
               </Link>
-              <Link href="/contact" className="contact-cta-secondary">
+              <Link href="/contact" className="contact-cta-secondary" data-cursor="pointer">
                 Send a message
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-bg-elevated/80 p-2 shadow-[var(--shadow-card)] backdrop-blur-sm">
-          <div className="flex flex-col divide-y divide-white/10">
-            <ContactChannel label="Email" href={`mailto:${settings.email}`}>
-              {settings.email}
-            </ContactChannel>
+        <div ref={channelsRef}>
+          <GlassPanel strong bordered className="p-2">
+            <div className="flex flex-col divide-y divide-white/10">
+              <div className="contact-channel-reveal">
+                <ContactChannel label="Email" href={`mailto:${settings.email}`}>
+                  {settings.email}
+                </ContactChannel>
+              </div>
 
-            {settings.phone ? (
-              <ContactChannel
-                label="Phone"
-                href={phoneHref(settings.phone)}
-                external
-                openInNewTab={false}
-              >
-                {settings.phone}
-              </ContactChannel>
-            ) : null}
+              {settings.phone ? (
+                <div className="contact-channel-reveal">
+                  <ContactChannel
+                    label="Phone"
+                    href={phoneHref(settings.phone)}
+                    external
+                    openInNewTab={false}
+                  >
+                    {settings.phone}
+                  </ContactChannel>
+                </div>
+              ) : null}
 
-            {settings.officeAddress ? (
-              <ContactChannel
-                label="Office"
-                href={mapsHref(settings.officeAddress)}
-                external
-              >
-                {CONTACT.officeShort}
-              </ContactChannel>
-            ) : null}
-          </div>
+              {settings.officeAddress ? (
+                <div className="contact-channel-reveal">
+                  <ContactChannel
+                    label="Office"
+                    href={mapsHref(settings.officeAddress)}
+                    external
+                  >
+                    {CONTACT.officeShort}
+                  </ContactChannel>
+                </div>
+              ) : null}
+            </div>
 
-          <div className="border-t border-white/10 p-4">
-            <p className="mb-3 text-xs uppercase tracking-widest text-text-secondary">
-              Connect
-            </p>
-            <LinkedInButton href={linkedIn} className="w-full sm:w-auto" />
-          </div>
+            <div className="contact-channel-reveal border-t border-white/10 p-4">
+              <p className="mb-3 text-xs uppercase tracking-widest text-text-secondary">
+                Connect
+              </p>
+              <LinkedInButton href={linkedIn} className="w-full sm:w-auto" />
+            </div>
+          </GlassPanel>
         </div>
       </div>
 
-      <p className="mt-8 border-t border-white/10 pt-6 text-sm text-text-secondary">
+      <p className="relative z-[1] mt-8 border-t border-white/10 pt-6 text-sm text-text-secondary">
         I typically reply within 1–2 business days. For project details, use the{" "}
         <Link
           href="/contact"
           className="text-text-primary underline underline-offset-4 hover:text-text-accent"
+          data-cursor="pointer"
         >
           contact form
         </Link>

@@ -16,6 +16,25 @@ export type EngagementOffering = {
   description: string;
   inquiryType: InquiryType;
   highlights: string[];
+  monogram: string;
+  duration: string;
+  recommended?: boolean;
+};
+
+export type ExecutiveQuote = {
+  id: string;
+  quote: string;
+  attribution: string;
+  context?: string;
+  title?: string;
+  photoUrl?: string;
+  companyLogo?: string;
+};
+
+export type VenturePartner = {
+  name: string;
+  href: string;
+  logoUrl?: string;
 };
 
 export type FaqItem = {
@@ -77,6 +96,9 @@ export const engagementOfferings: EngagementOffering[] = [
     description:
       "Interim or full-time CPO scope — roadmap, team build-out, and shipping category-defining platforms.",
     inquiryType: "Product Leadership",
+    monogram: "PL",
+    duration: "3–12 months · full-time or fractional",
+    recommended: true,
     highlights: ["0→1 and scale-up", "Cross-functional alignment", "Metrics-led delivery"],
   },
   {
@@ -85,6 +107,8 @@ export const engagementOfferings: EngagementOffering[] = [
     description:
       "Co-build with Orcrys portfolio companies or advise founders on product, brand, and growth systems.",
     inquiryType: "Venture Partnership",
+    monogram: "VP",
+    duration: "6–18 months · advisory or co-build",
     highlights: ["Platform strategy", "Fundraising narrative", "Go-to-market design"],
   },
   {
@@ -93,6 +117,8 @@ export const engagementOfferings: EngagementOffering[] = [
     description:
       "Keynotes, panels, and executive workshops on product, cybersecurity movements, and AI sovereignty.",
     inquiryType: "Speaking & Advisory",
+    monogram: "SA",
+    duration: "1 day – multi-week programs",
     highlights: ["Leadership offsites", "University & startup forums", "Board-ready briefings"],
   },
 ];
@@ -241,35 +267,41 @@ export const techStackGroups = [
   },
 ] as const;
 
-export const venturePartners = [
-  { name: "Mewayz", href: "https://mewayz.com/" },
-  { name: "PhantomX", href: "https://www.phantomx.tech/" },
-  { name: "Orcrys", href: "https://orcrys.com/" },
-  { name: "Edquate", href: "https://edquate.com/" },
-  { name: "Veerangana", href: "#products" },
-  { name: "NGSAA", href: "#products" },
-] as const;
+export const venturePartners: VenturePartner[] = [
+  { name: "Mewayz", href: "https://mewayz.com/", logoUrl: "/images/logos/mewayz.svg" },
+  { name: "PhantomX", href: "https://www.phantomx.tech/", logoUrl: "/images/logos/phantomx.svg" },
+  { name: "Orcrys", href: "https://orcrys.com/", logoUrl: "/images/logos/orcrys.svg" },
+  { name: "Edquate", href: "https://edquate.com/", logoUrl: "/images/logos/edquate.svg" },
+  { name: "Veerangana", href: "#products", logoUrl: "/images/logos/veerangana.svg" },
+  { name: "NGSAA", href: "#products", logoUrl: "/images/logos/ngsaa.svg" },
+];
 
-export const executiveQuotes = [
+export const executiveQuotes: ExecutiveQuote[] = [
   {
     id: "q1",
     quote:
       "Debanjan brings product soul and execution velocity — he doesn't separate strategy from shipping.",
-    attribution: "Growth lead · SaaS platform partner",
+    attribution: "Growth lead",
+    title: "SaaS platform partner",
     context: "Mewayz ecosystem",
+    companyLogo: "/images/logos/mewayz.svg",
   },
   {
     id: "q2",
     quote:
       "Rare blend of narrative, systems thinking, and hands-on leadership across security and community movements.",
-    attribution: "Advisor · Cyber readiness initiative",
+    attribution: "Security advisor",
+    title: "Cyber readiness initiative",
     context: "PhantomX launch",
+    companyLogo: "/images/logos/phantomx.svg",
   },
   {
     id: "q3",
     quote:
       "He frames ventures as movements, not slide decks — and still owns the roadmap Monday morning.",
-    attribution: "Founder · Venture studio collaborator",
+    attribution: "Studio founder",
+    title: "Venture studio collaborator",
     context: "Orcrys portfolio",
+    companyLogo: "/images/logos/orcrys.svg",
   },
-] as const;
+];

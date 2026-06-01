@@ -47,7 +47,7 @@ export function ShareProfileButton({
       type="button"
       onClick={handleShare}
       className={cn(
-        "rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-widest text-text-secondary transition hover:border-text-accent/40 hover:text-text-accent",
+        "rounded-full border border-white/20 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-widest text-text-secondary transition hover:border-text-accent/40 hover:bg-white/[0.06] hover:text-text-accent",
         className,
       )}
     >

@@ -1,19 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   getAnalyticsConsent,
   setAnalyticsConsent,
 } from "@/lib/analytics/consent";
 
-export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+function subscribeConsent(onStoreChange: () => void) {
+  const handler = () => onStoreChange();
+  window.addEventListener("analytics-consent", handler);
+  return () => window.removeEventListener("analytics-consent", handler);
+}
 
-  useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
-    if (getAnalyticsConsent() === null) setVisible(true);
-  }, []);
+function readCookieConsentVisible(): boolean {
+  if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return false;
+  return getAnalyticsConsent() === null;
+}
+
+export function CookieConsent() {
+  const visible = useSyncExternalStore(
+    subscribeConsent,
+    readCookieConsentVisible,
+    () => false,
+  );
 
   if (!visible) return null;
 
@@ -33,21 +43,15 @@ export function CookieConsent() {
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           type="button"
-          className="hero-cta-primary py-2.5 text-xs"
-          onClick={() => {
-            setAnalyticsConsent("granted");
-            setVisible(false);
-          }}
+          className="rounded-full bg-text-accent px-4 py-2 text-sm font-medium text-bg-primary"
+          onClick={() => setAnalyticsConsent("granted")}
         >
           Accept
         </button>
         <button
           type="button"
-          className="hero-cta-secondary py-2.5 text-xs"
-          onClick={() => {
-            setAnalyticsConsent("denied");
-            setVisible(false);
-          }}
+          className="rounded-full border border-white/15 px-4 py-2 text-sm text-text-secondary hover:text-text-primary"
+          onClick={() => setAnalyticsConsent("denied")}
         >
           Decline
         </button>

@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import {
   PhotoCollageCard,
   type CollageItem,
 } from "@/components/home/PhotoCollageCard";
+import { useMarqueeSpeed } from "@/components/motion/useMarqueeSpeed";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
 const marqueeTags = [
@@ -20,15 +22,15 @@ const marqueeTags = [
 ] as const;
 
 function MarqueeStrip() {
-  const reducedMotion = useReducedMotion();
+  const trackRef = useRef<HTMLDivElement>(null);
+  useMarqueeSpeed(trackRef, 20);
   const items = [...marqueeTags, ...marqueeTags];
 
   return (
-    <div className="photo-collage-marquee mt-14 overflow-hidden border-y border-white/10 py-4">
-      <motion.div
-        className="photo-collage-marquee__track flex w-max gap-10"
-        animate={reducedMotion ? undefined : { x: ["0%", "-50%"] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+    <div className="photo-collage-marquee marquee mt-14 overflow-hidden border-y border-white/10 py-4">
+      <div
+        ref={trackRef}
+        className="photo-collage-marquee__track marquee__track flex w-max gap-10"
       >
         {items.map((tag, i) => (
           <span
@@ -41,7 +43,7 @@ function MarqueeStrip() {
             </span>
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

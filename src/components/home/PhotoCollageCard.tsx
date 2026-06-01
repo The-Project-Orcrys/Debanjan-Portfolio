@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PortfolioImage } from "@/components/shared/PortfolioImage";
+import { PORTRAIT_OBJECT_POSITION } from "@/lib/images";
 import {
   motion,
   useMotionValue,
@@ -85,6 +86,7 @@ export function PhotoCollageCard({
         <PortfolioImage
           src={item.src}
           alt={item.caption}
+          objectPosition={PORTRAIT_OBJECT_POSITION}
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover transition duration-700 ease-out group-hover:scale-[1.08]"
         />

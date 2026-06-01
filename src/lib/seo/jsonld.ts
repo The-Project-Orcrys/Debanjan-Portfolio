@@ -147,7 +147,6 @@ export function buildCreativeWorkSchema(project: WorkProject, siteUrl: string) {
 export function buildBreadcrumbSchema(
   items: { name: string; path: string }[],
 ) {
-  const siteUrl = getSiteUrl();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

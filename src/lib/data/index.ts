@@ -1,8 +1,26 @@
-/**
- * Data layer public API — import from here in app routes when convenient.
- */
-export { assets } from "@/lib/data/assets";
-export { CONTACT, mergeSiteSettingsContact, mapsHref, phoneHref } from "@/lib/data/contact";
+/** Data layer — static content, CMS defaults, and fetchers. */
+export {
+  assets,
+  CONTACT,
+  contactFaq,
+  defaultProducts,
+  engagementOfferings,
+  executiveQuotes,
+  impactMetrics,
+  leadershipTimeline,
+  mapsHref,
+  mergeSiteSettingsContact,
+  phoneHref,
+  speakingTopics,
+  techStackGroups,
+  venturePartners,
+  ventureQuickLinks,
+  whatsappHref,
+  workProcess,
+  type EngagementOffering,
+  type FaqItem,
+  type TimelineEntry,
+} from "@/lib/data/static";
 export {
   collageItems,
   defaultAbout,
@@ -24,4 +42,3 @@ export {
   getWorkProjectBySlug,
   getWorkProjects,
 } from "@/lib/data/fetch";
-export { defaultProducts, ventureQuickLinks } from "@/lib/data/products";

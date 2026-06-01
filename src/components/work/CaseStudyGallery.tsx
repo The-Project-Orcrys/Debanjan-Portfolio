@@ -53,6 +53,7 @@ export function CaseStudyGallery({ items }: { items: GalleryItem[] }) {
         <MediaGalleryItem
           key={item._key}
           item={item}
+          portraitFocus
           sizes="(max-width: 768px) 100vw, 50vw"
           className={cn(
             "gallery-reveal aspect-[16/10]",

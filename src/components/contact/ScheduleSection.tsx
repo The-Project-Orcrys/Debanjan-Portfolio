@@ -1,5 +1,5 @@
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
-import { getCalendarEmbedUrl, getCalendarUrl } from "@/lib/site/calendar";
+import { getCalendarEmbedUrl, getCalendarUrl } from "@/lib/site";
 
 export function ScheduleSection() {
   const embedUrl = getCalendarEmbedUrl();

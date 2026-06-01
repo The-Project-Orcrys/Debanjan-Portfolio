@@ -4,15 +4,13 @@ import { FeaturedWorkStrip } from "@/components/home/FeaturedWorkStrip";
 import { FolderCTA } from "@/components/home/FolderCTA";
 import { HowIWorkSection } from "@/components/home/HowIWorkSection";
 import { HeroSection } from "@/components/home/HeroSection";
-import { HomeSectionNav } from "@/components/home/HomeSectionNav";
-import { ImpactMetricsStrip } from "@/components/home/ImpactMetricsStrip";
+import { HomeChapterStack } from "@/components/home/HomeChapterStack";
 import { LeadershipTimeline } from "@/components/home/LeadershipTimeline";
 import { NewsHighlights } from "@/components/home/NewsHighlights";
 import { PhotoCollage } from "@/components/home/PhotoCollage";
 import { ProductsSection } from "@/components/home/ProductsSection";
 import { SpeakingTopicsSection } from "@/components/home/SpeakingTopicsSection";
 import { TechStackStrip } from "@/components/home/TechStackStrip";
-import { VenturePartnersStrip } from "@/components/home/VenturePartnersStrip";
 import { RecognitionStrip } from "@/components/home/RecognitionStrip";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { TestimonialsStrip } from "@/components/home/TestimonialsStrip";
@@ -37,6 +35,7 @@ import { buildWebPageSchema } from "@/lib/seo/jsonld";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getCalendarUrl } from "@/lib/site/calendar";
 import { getResumeUrl } from "@/lib/site/resume.server";
+import { resolveOptionalMedia } from "@/lib/site/optional-media.server";
 import { getSiteUrl } from "@/lib/seo/config";
 
 export async function generateMetadata() {
@@ -67,7 +66,11 @@ export default async function HomePage() {
     getUpdates(),
   ]);
   const services = getFeaturedServices(allServices);
-  const [resumeUrl, calendarUrl] = [getResumeUrl(), getCalendarUrl()];
+  const [resumeUrl, calendarUrl, optionalMedia] = [
+    getResumeUrl(),
+    getCalendarUrl(),
+    resolveOptionalMedia(),
+  ];
   const siteUrl = getSiteUrl();
 
   const webPageSchema = buildWebPageSchema({
@@ -79,16 +82,17 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={webPageSchema} />
-      <HeroSection
-        settings={settings}
-        shapes={defaultShapes}
-        resumeUrl={resumeUrl}
-        calendarUrl={calendarUrl}
-        shareUrl={siteUrl}
-      />
-      <HomeSectionNav />
-      <ImpactMetricsStrip />
-      <VenturePartnersStrip />
+      <div className="home-landing">
+        <HeroSection
+          settings={settings}
+          shapes={defaultShapes}
+          resumeUrl={resumeUrl}
+          calendarUrl={calendarUrl}
+          shareUrl={siteUrl}
+          scrollHintLottie={optionalMedia.scrollHintLottie}
+        />
+      </div>
+      <HomeChapterStack />
       <EngagementSection />
       <ServicesSection services={services} />
       <ProductsSection />

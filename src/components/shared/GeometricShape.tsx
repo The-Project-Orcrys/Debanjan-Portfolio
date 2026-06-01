@@ -25,7 +25,7 @@ export function GeometricShape({
       ref={ref as React.RefObject<HTMLDivElement>}
       className={cn(
         "pointer-events-none absolute hidden md:block",
-        isBlue ? "opacity-90" : "opacity-50",
+        isBlue ? "opacity-55" : "opacity-50",
         colorClass,
         type === "circle" && "rounded-full",
         type === "pill" && "rounded-full",

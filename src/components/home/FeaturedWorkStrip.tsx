@@ -1,18 +1,45 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FeaturedWorkCard } from "@/components/home/FeaturedWorkCard";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { cn } from "@/lib/utils";
+import { motionPresets } from "@/lib/motionPresets";
 import type { WorkProject } from "@/types/content";
+
+const gridVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.12 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: motionPresets.ease.out },
+  },
+};
+
+function gridItemClass(index: number, count: number) {
+  if (count !== 5) return "";
+  if (index < 3) return "lg:col-span-4";
+  if (index === 3) return "lg:col-span-4 lg:col-start-3";
+  return "lg:col-span-4 lg:col-start-7";
+}
 
 export function FeaturedWorkStrip({ projects }: { projects: WorkProject[] }) {
   const featured = projects
     .filter((p) => p.featured)
     .sort((a, b) => a.order - b.order)
-    .slice(0, 4);
+    .slice(0, 5);
 
   if (featured.length === 0) return null;
+
+  const useThreeTwo = featured.length === 5;
 
   return (
     <section
@@ -31,59 +58,38 @@ export function FeaturedWorkStrip({ projects }: { projects: WorkProject[] }) {
         </ScrollReveal>
         <Link
           href="/work"
-          className="text-sm uppercase tracking-widest text-text-secondary underline-offset-4 hover:text-text-accent hover:underline"
+          className="shrink-0 text-sm uppercase tracking-widest text-text-secondary underline-offset-4 hover:text-text-accent hover:underline"
+          data-cursor="pointer"
         >
           All projects →
         </Link>
       </div>
 
-      <div className="mt-8 flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <motion.div
+        className={cn(
+          "featured-work-grid mt-8 grid w-full gap-5 sm:grid-cols-2 sm:gap-5",
+          useThreeTwo ? "lg:grid-cols-12 lg:gap-6" : "lg:grid-cols-4 lg:gap-6",
+        )}
+        variants={gridVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-8%" }}
+      >
         {featured.map((project, i) => (
-          <motion.article
+          <motion.div
             key={project._id}
-            initial={{ opacity: 0, x: 32 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.08, duration: 0.55 }}
-            className="group w-[min(85vw,320px)] shrink-0 snap-start sm:w-[300px]"
+            variants={cardVariants}
+            className={cn(
+              useThreeTwo && gridItemClass(i, featured.length),
+              featured.length === 5 &&
+                i === 4 &&
+                "sm:col-span-2 sm:max-w-md sm:justify-self-center lg:col-span-4 lg:col-start-7 lg:max-w-none",
+            )}
           >
-            <Link
-              href={`/work/${project.slug}`}
-              className="block overflow-hidden rounded-[var(--radius-card)] border border-white/10 bg-bg-elevated/30 transition hover:border-text-accent/35 hover:shadow-[var(--shadow-glow)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={project.coverImageUrl}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                  sizes="320px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-bg-primary/70 px-3 py-1 text-xs uppercase tracking-widest backdrop-blur-sm">
-                  {project.category}
-                </span>
-              </div>
-              <div className="p-5">
-                <p className="text-xs tabular-nums text-text-secondary">
-                  {project.year}
-                </p>
-                <h3 className="text-display mt-1 text-lg leading-snug">
-                  {project.title}
-                </h3>
-                <p className="mt-2 line-clamp-2 text-sm text-text-secondary">
-                  {project.challenge}
-                </p>
-                {project.outcomes && project.outcomes[0] ? (
-                  <p className="mt-3 text-sm text-text-accent">
-                    {project.outcomes[0].value} {project.outcomes[0].label.toLowerCase()}
-                  </p>
-                ) : null}
-              </div>
-            </Link>
-          </motion.article>
+            <FeaturedWorkCard project={project} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

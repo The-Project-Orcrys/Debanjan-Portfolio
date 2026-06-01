@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ROUTES } from "@/config/site";
-import { CONTACT, whatsappHref } from "@/lib/data/contact";
+import { CONTACT, whatsappHref } from "@/lib/data/static";
 import { cn } from "@/lib/utils";
 
 export function StickyMobileContact({ email }: { email: string }) {

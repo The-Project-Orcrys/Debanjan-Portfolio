@@ -70,6 +70,17 @@ See `.env.example` — Sanity, Resend (`CONTACT_EMAIL=ceo@orcrys.com`), PostHog,
 3. `npm run seed:sanity` then upload images in Studio
 4. Webhook: `POST /api/revalidate` with `x-sanity-secret`
 
+## Optional media (no 404s)
+
+The site only loads optional files when they exist under `public/` (see `resolveOptionalMedia()` in `src/lib/site/optional-media.server.ts`). No config change is required.
+
+| Asset | Path | Fallback |
+|-------|------|----------|
+| Hero scroll hint | `public/animations/scroll-hint.lottie` | CSS arrow |
+| Footer texture | `public/videos/footer-texture.mp4` | Gradient |
+
+Or set `footerVideoUrl` in Sanity site settings for the footer only.
+
 ## Deploy checklist
 
 Before going live:

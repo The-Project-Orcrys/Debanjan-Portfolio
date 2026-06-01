@@ -1,9 +1,9 @@
 import { ResumePageSection } from "@/components/resume/ResumePageSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteSettings } from "@/lib/data/fetch";
-import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/seo/jsonld";
-import { buildPageMetadata } from "@/lib/seo/metadata";
-import { getResumeUrl } from "@/lib/site/resume.server";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo-metadata";
+import { getResumeUrl } from "@/lib/site.server";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();

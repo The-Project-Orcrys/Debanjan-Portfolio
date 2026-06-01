@@ -2,7 +2,8 @@ import { ContactEmailTemplate } from "@/components/emails/ContactEmailTemplate";
 import type { ContactSchema } from "@/lib/validation";
 
 function contactPayload(data: ContactSchema) {
-  const { website: _honeypot, ...payload } = data;
+  const { website, ...payload } = data;
+  void website;
   return payload;
 }
 

@@ -12,6 +12,7 @@ export function PortfolioImage({
   sizes,
   className,
   priority,
+  objectPosition = "center",
 }: {
   src: string;
   alt: string;
@@ -19,6 +20,8 @@ export function PortfolioImage({
   sizes?: string;
   className?: string;
   priority?: boolean;
+  /** Keeps faces visible in portrait crops (e.g. `50% 18%`). */
+  objectPosition?: string;
 }) {
   const [currentSrc, setCurrentSrc] = useState(src);
   const [failed, setFailed] = useState(false);
@@ -53,6 +56,7 @@ export function PortfolioImage({
       sizes={sizes}
       priority={priority}
       className={className}
+      style={{ objectPosition }}
       onError={handleError}
     />
   );

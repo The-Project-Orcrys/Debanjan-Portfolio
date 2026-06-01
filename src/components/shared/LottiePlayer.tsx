@@ -27,7 +27,7 @@ export function LottiePlayer({
 }: LottiePlayerProps) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) {
+  if (!src || failed) {
     return (
       <div className={cn("flex items-center justify-center", className)}>
         {fallback ?? (

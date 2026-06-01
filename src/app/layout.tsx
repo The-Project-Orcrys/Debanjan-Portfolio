@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif } from "next/font/google";
 import { AnalyticsWrapper } from "@/components/providers/AnalyticsWrapper";
 import { MotionConfigProvider } from "@/components/motion/MotionConfig";
+import { MotionShell } from "@/components/motion/MotionShell";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteSettings, getWorkProjects } from "@/lib/data/fetch";
 import {
@@ -9,9 +10,9 @@ import {
   buildProfessionalServiceSchema,
   buildWebSiteSchema,
   buildWorkListSchema,
-} from "@/lib/seo/jsonld";
-import { buildRootMetadata } from "@/lib/seo/metadata";
-import { getSiteUrl } from "@/lib/seo/config";
+} from "@/lib/seo";
+import { buildRootMetadata } from "@/lib/seo-metadata";
+import { getSiteUrl } from "@/lib/seo";
 import "@/styles/globals.css";
 
 const displayFont = Instrument_Serif({
@@ -53,7 +54,9 @@ export default async function RootLayout({
       <body className="min-h-full bg-bg-primary text-text-primary antialiased">
         <JsonLd data={globalSchema} />
         <AnalyticsWrapper>
-          <MotionConfigProvider>{children}</MotionConfigProvider>
+          <MotionConfigProvider>
+            <MotionShell>{children}</MotionShell>
+          </MotionConfigProvider>
         </AnalyticsWrapper>
       </body>
     </html>

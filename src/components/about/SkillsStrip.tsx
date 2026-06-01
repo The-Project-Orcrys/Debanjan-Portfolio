@@ -23,8 +23,12 @@ export function SkillsStrip({ settings }: { settings: SiteSettings }) {
         {skills.map((skill) => (
           <li
             key={skill}
-            className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-text-secondary"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-text-secondary transition hover:border-text-accent/30 hover:text-text-primary"
           >
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-text-accent/70"
+              aria-hidden
+            />
             {skill}
           </li>
         ))}

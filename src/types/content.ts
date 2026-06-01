@@ -37,6 +37,8 @@ export interface Product {
   url: string;
   category: string;
   imageUrl?: string;
+  /** CSS object-position for portrait crops, e.g. `50% 18%` */
+  imageObjectPosition?: string;
   order: number;
 }
 

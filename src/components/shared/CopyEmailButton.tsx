@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function CopyEmailButton({ email }: { email: string }) {
+export function CopyEmailButton({
+  email,
+  className,
+}: {
+  email: string;
+  className?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -21,8 +27,9 @@ export function CopyEmailButton({ email }: { email: string }) {
       type="button"
       onClick={handleCopy}
       className={cn(
-        "mt-3 text-xs uppercase tracking-widest transition",
+        "text-xs uppercase tracking-widest transition",
         copied ? "text-text-accent" : "text-text-secondary hover:text-text-accent",
+        className,
       )}
     >
       {copied ? "Email copied" : "Copy email address"}

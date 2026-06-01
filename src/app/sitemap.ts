@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getWorkProjects } from "@/lib/data/fetch";
-import { getSiteUrl } from "@/lib/seo/config";
+import { getSiteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();

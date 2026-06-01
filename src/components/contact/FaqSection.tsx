@@ -1,9 +1,13 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useId, useState } from "react";
+import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Eyebrow, SectionHeading } from "@/components/ui/Typography";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { contactFaq } from "@/lib/data/founder";
 import { cn } from "@/lib/utils";
+import { motionPresets } from "@/lib/motionPresets";
 
 function FaqItem({
   question,
@@ -20,7 +24,7 @@ function FaqItem({
   const buttonId = useId();
 
   return (
-    <div className="border-b border-white/10">
+    <div className="border-b border-white/10 last:border-b-0">
       <h3>
         <button
           id={buttonId}
@@ -29,6 +33,7 @@ function FaqItem({
           aria-expanded={open}
           aria-controls={panelId}
           onClick={onToggle}
+          data-cursor="pointer"
         >
           {question}
           <span
@@ -42,15 +47,24 @@ function FaqItem({
           </span>
         </button>
       </h3>
-      <div
-        id={panelId}
-        role="region"
-        aria-labelledby={buttonId}
-        hidden={!open}
-        className="pb-5"
-      >
-        <p className="text-sm leading-relaxed text-text-secondary">{answer}</p>
-      </div>
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div
+            id={panelId}
+            role="region"
+            aria-labelledby={buttonId}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: motionPresets.ease.out }}
+            className="overflow-hidden"
+          >
+            <p className="pb-5 text-sm leading-relaxed text-text-secondary">
+              {answer}
+            </p>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }
@@ -64,19 +78,15 @@ export function FaqSection() {
       aria-labelledby="faq-heading"
     >
       <ScrollReveal>
-        <p className="text-sm uppercase tracking-[0.2em] text-text-accent">
-          FAQ
-        </p>
-        <h2 id="faq-heading" className="text-display mt-4 text-h2">
-          Common questions
-        </h2>
+        <Eyebrow>FAQ</Eyebrow>
+        <SectionHeading id="faq-heading">Common questions</SectionHeading>
         <p className="mt-3 max-w-xl text-text-secondary">
           Quick answers before you reach out — engagement types, response time,
           and location.
         </p>
       </ScrollReveal>
 
-      <div className="mt-8 max-w-3xl">
+      <GlassPanel bordered className="mt-8 max-w-3xl px-6 sm:px-8">
         {contactFaq.map((item) => (
           <FaqItem
             key={item.id}
@@ -88,7 +98,7 @@ export function FaqSection() {
             }
           />
         ))}
-      </div>
+      </GlassPanel>
     </section>
   );
 }

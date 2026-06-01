@@ -1,5 +1,5 @@
-import { getCalendarUrl } from "@/lib/site/calendar";
-import { getResumeUrl } from "@/lib/site/resume.server";
+import { getCalendarUrl } from "@/lib/site";
+import { getResumeUrl } from "@/lib/site.server";
 import {
   FounderActionLinks,
   FounderActionTextLinks,

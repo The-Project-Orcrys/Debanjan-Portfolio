@@ -1,22 +1,37 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLenis } from "@/components/motion/LenisProvider";
 
 export function ReadingProgressBar() {
+  const lenis = useLenis();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => {
+    const updateFromWindow = () => {
       const doc = document.documentElement;
-      const scrollTop = doc.scrollTop;
       const height = doc.scrollHeight - doc.clientHeight;
-      setProgress(height > 0 ? (scrollTop / height) * 100 : 0);
+      setProgress(height > 0 ? (doc.scrollTop / height) * 100 : 0);
+    };
+
+    if (!lenis) {
+      updateFromWindow();
+      window.addEventListener("scroll", updateFromWindow, { passive: true });
+      return () => window.removeEventListener("scroll", updateFromWindow);
+    }
+
+    const onScroll = () => {
+      const limit = lenis.limit;
+      const scroll = lenis.scroll;
+      setProgress(limit > 0 ? (scroll / limit) * 100 : 0);
     };
 
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    lenis.on("scroll", onScroll);
+    return () => {
+      lenis.off("scroll", onScroll);
+    };
+  }, [lenis]);
 
   if (progress <= 0) return null;
 

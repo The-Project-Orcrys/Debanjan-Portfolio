@@ -23,6 +23,16 @@ type Particle = {
   pulse: number;
 };
 
+type Streak = {
+  x: number;
+  y: number;
+  len: number;
+  speed: number;
+  angle: number;
+  opacity: number;
+  life: number;
+};
+
 const BLOBS: Blob[] = [
   { cx: 0.12, cy: 0.18, radius: 0.52, rgb: [26, 58, 255], phase: 0, speed: 1 },
   { cx: 0.82, cy: 0.15, radius: 0.45, rgb: [200, 184, 255], phase: 1.4, speed: 0.85 },
@@ -54,9 +64,10 @@ export function AnimatedHeroBackground() {
     let height = 0;
     let dpr = 1;
     let particles: Particle[] = [];
+    let streaks: Streak[] = [];
+    let streakTimer = 0;
     let frameId = 0;
     let visible = true;
-    let time = 0;
 
     const mouse = { x: 0.5, y: 0.5, sx: 0.5, sy: 0.5 };
 
@@ -214,6 +225,82 @@ export function AnimatedHeroBackground() {
       ctx.restore();
     };
 
+    const drawHorizonGlow = () => {
+      const glow = ctx.createLinearGradient(0, height * 0.72, 0, height);
+      glow.addColorStop(0, "rgba(26, 58, 255, 0)");
+      glow.addColorStop(0.35, "rgba(26, 58, 255, 0.08)");
+      glow.addColorStop(0.55, "rgba(200, 184, 255, 0.14)");
+      glow.addColorStop(1, "rgba(10, 10, 10, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, height * 0.65, width, height * 0.35);
+
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      const line = ctx.createLinearGradient(0, 0, width, 0);
+      line.addColorStop(0, "rgba(200, 184, 255, 0)");
+      line.addColorStop(0.5, "rgba(200, 184, 255, 0.35)");
+      line.addColorStop(1, "rgba(200, 184, 255, 0)");
+      ctx.strokeStyle = line;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, height * 0.78);
+      ctx.lineTo(width, height * 0.78);
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    const spawnStreak = () => {
+      if (reducedMotion || streaks.length > 4) return;
+      streaks.push({
+        x: Math.random() * width * 0.6,
+        y: Math.random() * height * 0.45,
+        len: 80 + Math.random() * 120,
+        speed: 6 + Math.random() * 8,
+        angle: 0.35 + Math.random() * 0.25,
+        opacity: 0.5 + Math.random() * 0.4,
+        life: 1,
+      });
+    };
+
+    const drawStreaks = (dt: number) => {
+      if (reducedMotion) return;
+
+      streakTimer += dt;
+      if (streakTimer > 2200) {
+        streakTimer = 0;
+        if (Math.random() > 0.35) spawnStreak();
+      }
+
+      streaks = streaks.filter((s) => {
+        s.x += Math.cos(s.angle) * s.speed;
+        s.y += Math.sin(s.angle) * s.speed;
+        s.life -= 0.018;
+
+        if (s.life <= 0) return false;
+
+        const grad = ctx.createLinearGradient(
+          s.x,
+          s.y,
+          s.x - Math.cos(s.angle) * s.len,
+          s.y - Math.sin(s.angle) * s.len,
+        );
+        grad.addColorStop(0, `rgba(255, 255, 255, ${s.opacity * s.life})`);
+        grad.addColorStop(0.4, `rgba(200, 184, 255, ${s.opacity * s.life * 0.6})`);
+        grad.addColorStop(1, "rgba(26, 58, 255, 0)");
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(
+          s.x - Math.cos(s.angle) * s.len,
+          s.y - Math.sin(s.angle) * s.len,
+        );
+        ctx.stroke();
+        return true;
+      });
+    };
+
     const drawParticles = (t: number) => {
       const linkDistance = width < 768 ? 110 : 150;
       const animT = t * 0.002;
@@ -257,7 +344,7 @@ export function AnimatedHeroBackground() {
           const ddy = p.y - q.y;
           const dist = Math.hypot(ddx, ddy);
           if (dist < linkDistance) {
-            const lineAlpha = (1 - dist / linkDistance) * 0.22;
+            const lineAlpha = (1 - dist / linkDistance) * 0.32;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
@@ -275,13 +362,18 @@ export function AnimatedHeroBackground() {
       requestAnimationFrame(() => setReady(true));
     };
 
+    let lastFrame = 0;
+
     const render = (now: number) => {
-      time = now;
+      const dt = lastFrame ? now - lastFrame : 16;
+      lastFrame = now;
       drawBase();
       drawAuroraBlobs(now);
       drawAuroraWaves(now);
+      drawHorizonGlow();
       drawGrid(now);
       drawParticles(now);
+      drawStreaks(dt);
       markReady();
     };
 
@@ -304,7 +396,7 @@ export function AnimatedHeroBackground() {
 
     if (reducedMotion) {
       render(0);
-      setReady(true);
+      queueMicrotask(() => setReady(true));
       return () => {
         resizeObserver.disconnect();
         intersection.disconnect();
@@ -346,6 +438,7 @@ export function AnimatedHeroBackground() {
         )}
       />
 
+      <div className="hero-bg-beams hero-bg-beams--secondary hero-bg-layer" />
       <div className="hero-bg-beams hero-bg-layer" />
       <div className="hero-bg-orb hero-bg-orb--1 hero-bg-layer" />
       <div className="hero-bg-orb hero-bg-orb--2 hero-bg-layer" />

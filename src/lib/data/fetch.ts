@@ -100,7 +100,10 @@ export const getAbout = unstable_cache(
   async () => {
     const data = await fetchSanity<AboutSection>(ABOUT_QUERY, defaultAbout);
     if (!data?.whoIAm?.length) return defaultAbout;
-    return data;
+    return {
+      ...data,
+      photoUrl: data.photoUrl?.trim() || defaultAbout.photoUrl,
+    };
   },
   ["about"],
   { tags: ["about"] },

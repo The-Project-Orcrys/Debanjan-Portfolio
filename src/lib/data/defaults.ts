@@ -58,13 +58,13 @@ export const defaultSiteSettings: SiteSettings = {
   studioName: "Orcrys Technologies",
   studioNote: "Building intelligent ventures",
   location: `${CONTACT.officeShort} · working globally (Remote)`,
-  footerVideoUrl: "/videos/footer-texture.mp4",
+  footerVideoUrl: undefined,
   ogImageUrl: "/images/og.jpg",
 };
 
 export const defaultShapes: ShapeConfig[] = [
   { id: "s1", type: "pill", color: "grey", size: 120, top: "12%", left: "8%", parallaxSpeed: 0.2, rotationOffset: 12 },
-  { id: "s2", type: "circle", color: "blue", size: 80, top: "25%", left: "75%", parallaxSpeed: 0.5, rotationOffset: -8 },
+  { id: "s2", type: "circle", color: "blue", size: 56, top: "14%", left: "94%", parallaxSpeed: 0.5, rotationOffset: -8 },
   { id: "s3", type: "hexagon", color: "grey", size: 100, top: "55%", left: "15%", parallaxSpeed: 0.35, rotationOffset: 20 },
   { id: "s4", type: "square", color: "blue", size: 64, top: "70%", left: "82%", parallaxSpeed: 0.65, rotationOffset: 45 },
   { id: "s5", type: "circle", color: "grey", size: 48, top: "8%", left: "55%", parallaxSpeed: 0.3, rotationOffset: 0 },
@@ -363,6 +363,52 @@ export const defaultWorkProjects: WorkProject[] = [
     order: 2,
     galleryCount: 4,
   }),
+  {
+    ...project({
+      _id: "p9",
+      title: "Edquate",
+      slug: "edquate",
+      category: "Product Leadership",
+      year: 2025,
+      featured: true,
+      liveUrl: "https://edquate.com/",
+      challenge:
+        "Build an agent-native learning OS — synced whiteboard tutoring, adaptive roadmaps, practice exams, and career intelligence for learners at scale.",
+      services: [
+        "Product Vision",
+        "Learning Experience",
+        "AI Platform Strategy",
+        "Go-to-Market",
+      ],
+      role: "Founder · Product Leadership · Orcrys",
+      order: 8,
+      galleryCount: 3,
+    }),
+    coverImageUrl: assets.products.edquate,
+  } as WorkProject,
+  {
+    ...project({
+      _id: "p10",
+      title: "Orcrys",
+      slug: "orcrys",
+      category: "Product Leadership",
+      year: 2024,
+      featured: true,
+      liveUrl: "https://orcrys.com/",
+      challenge:
+        "Launch and scale a venture studio building AI-native products across education, creator economy, and digital infrastructure.",
+      services: [
+        "Venture Studio",
+        "Product Strategy",
+        "Brand & Narrative",
+        "Portfolio GTM",
+      ],
+      role: "Founder & CEO · Full-time · Kolkata, India",
+      order: 9,
+      galleryCount: 3,
+    }),
+    coverImageUrl: assets.products.orcrys,
+  } as WorkProject,
   project({
     _id: "p4",
     title: "Veerangana",

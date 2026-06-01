@@ -1,20 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function subscribeNoop() {
+  return () => {};
+}
+
+function readShowFooterVideo(videoSrc?: string): boolean {
+  if (!videoSrc) return false;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } })
+    .connection;
+  const saveData = conn?.saveData;
+  const narrow = window.innerWidth < 768;
+  return !reducedMotion && !saveData && !narrow;
+}
 
 export function FooterBackground({ videoSrc }: { videoSrc?: string }) {
-  const [showVideo, setShowVideo] = useState(false);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } })
-      .connection;
-    const saveData = conn?.saveData;
-    const narrow = window.innerWidth < 768;
-    setShowVideo(Boolean(videoSrc) && !reducedMotion && !saveData && !narrow);
-  }, [videoSrc]);
+  const showVideo = useSyncExternalStore(
+    subscribeNoop,
+    () => readShowFooterVideo(videoSrc),
+    () => false,
+  );
 
   if (!showVideo || !videoSrc) {
     return (

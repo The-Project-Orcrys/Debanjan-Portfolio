@@ -2,12 +2,12 @@ import Link from "next/link";
 import { FounderActionLinksServer } from "@/components/shared/FounderActionLinksServer";
 import { ShareProfileButton } from "@/components/shared/ShareProfileButton";
 import { ROUTES } from "@/config/site";
-import { getSiteUrl } from "@/lib/seo/config";
+import { getSiteUrl } from "@/lib/seo";
 import {
   getResumeDownloadName,
   getResumeUrl,
   resumeFileOnDisk,
-} from "@/lib/site/resume.server";
+} from "@/lib/site.server";
 import type { SiteSettings } from "@/types/content";
 
 export function ResumePageSection({ settings }: { settings: SiteSettings }) {

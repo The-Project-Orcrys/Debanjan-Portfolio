@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { NewsHighlightImage } from "@/components/home/NewsHighlightImage";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { ROUTES } from "@/config/site";
 import type { UpdateItem } from "@/types/content";
@@ -32,21 +32,11 @@ export function NewsHighlights({ updates }: { updates: UpdateItem[] }) {
       </div>
 
       <ul className="mt-8 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-        {items.map((item, index) => {
+        {items.map((item) => {
           const image = item.imageUrls[0];
           const content = (
             <>
-              {image ? (
-                <div className="relative aspect-[16/10] overflow-hidden rounded-t-[var(--radius-card)]">
-                  <Image
-                    src={image}
-                    alt=""
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-              ) : null}
+              {image ? <NewsHighlightImage src={image} /> : null}
               <div className="flex flex-1 flex-col p-5">
                 <span className="text-xs uppercase tracking-widest text-text-accent">
                   {item.period ?? `Update ${String(item.number).padStart(2, "0")}`}

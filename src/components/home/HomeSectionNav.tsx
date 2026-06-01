@@ -45,6 +45,7 @@ export function HomeSectionNav() {
                   ? "bg-white/10 text-text-accent"
                   : "text-text-secondary hover:text-text-primary",
               )}
+              data-cursor="pointer"
             >
               {item.label}
             </Link>

@@ -2,7 +2,7 @@
  * Copies photos from assests/ into public/images/
  * Usage: node scripts/import-assets.mjs
  */
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync } from "fs";
 import { join } from "path";
 
 const root = process.cwd();
@@ -72,10 +72,27 @@ for (const [k, ph] of Object.entries(updates)) {
   cp(p(`${ph}.jpg`), join(imgRoot, "updates", `${k}.jpg`));
 }
 
+const productsDir = join(imgRoot, "products");
+ensureDir(productsDir);
+
+/** One unique source photo per venture card */
+const ventureProducts = {
+  orcrys: "photo-4",
+  mewayz: "photo-1",
+  "mewayz-india": "photo-2",
+  edquate: "photo-3",
+  phantomx: "photo-2",
+};
+for (const [id, ph] of Object.entries(ventureProducts)) {
+  cp(p(`${ph}.jpg`), join(productsDir, `${id}.jpg`));
+}
+
 const slugs = [
   "mewayz",
   "phantomx",
   "ngsaa-ai-nation",
+  "edquate",
+  "orcrys",
   "veerangana",
   "qnet",
   "veerangana-initiative",
@@ -86,6 +103,8 @@ const galleryCounts = {
   mewayz: 6,
   phantomx: 5,
   "ngsaa-ai-nation": 4,
+  edquate: 3,
+  orcrys: 3,
   veerangana: 7,
   qnet: 3,
   "veerangana-initiative": 5,
@@ -103,6 +122,12 @@ slugs.forEach((slug, si) => {
     cp(p(gPhoto), join(dir, `gallery-${String(g).padStart(2, "0")}.jpg`));
   }
 });
+
+// Case-study covers match venture product photography
+ensureDir(join(imgRoot, "work", "edquate"));
+ensureDir(join(imgRoot, "work", "orcrys"));
+cp(join(productsDir, "edquate.jpg"), join(imgRoot, "work", "edquate", "cover.jpg"));
+cp(join(productsDir, "orcrys.jpg"), join(imgRoot, "work", "orcrys", "cover.jpg"));
 
 const resumeSources = [
   join(root, "Profile.pdf"),

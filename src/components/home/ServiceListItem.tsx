@@ -22,10 +22,10 @@ export function ServiceListItem({
       <button
         type="button"
         className={cn(
-          "group relative w-full text-left outline-none",
-          "border-b border-white/10 py-7 md:py-9",
-          "transition-[background,box-shadow] duration-500",
-          active && "bg-white/[0.03]",
+          "group relative w-full text-left outline-none transition-all duration-500",
+          active
+            ? "my-2 rounded-2xl border border-white/10 bg-gradient-to-br from-shape-blue/14 via-white/[0.04] to-transparent px-4 py-5 shadow-[0_0_48px_rgba(26,58,255,0.1)] sm:px-5 sm:py-6"
+            : "border-b border-white/10 py-5 sm:py-6",
         )}
         onMouseEnter={onActivate}
         onFocus={onActivate}
@@ -33,19 +33,27 @@ export function ServiceListItem({
         aria-expanded={active}
         aria-controls={`service-panel-${service._id}`}
       >
-        {active && (
+        {active ? (
           <motion.span
             layoutId="service-active-bar"
-            className="absolute bottom-0 left-0 top-0 w-[3px] bg-gradient-to-b from-shape-blue via-text-accent to-transparent"
+            className="absolute bottom-3 left-0 top-3 w-[3px] rounded-full bg-gradient-to-b from-shape-blue via-text-accent to-transparent"
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
           />
-        )}
+        ) : null}
 
-        <div className="flex items-start gap-5 md:gap-8 pl-1">
+        <div
+          className={cn(
+            "flex items-start gap-4 sm:gap-6",
+            active ? "pl-3" : "pl-0",
+          )}
+        >
           <span
             className={cn(
-              "text-display text-h1 shrink-0 tabular-nums leading-none transition-all duration-500",
-              active ? "text-text-accent" : "text-white/12 group-hover:text-white/25",
+              "text-display shrink-0 tabular-nums leading-none transition-all duration-500",
+              "text-[clamp(2rem,5vw,3.25rem)]",
+              active
+                ? "text-text-accent"
+                : "text-white/12 group-hover:text-white/28",
             )}
           >
             {number}
@@ -55,50 +63,48 @@ export function ServiceListItem({
             <div className="flex items-start justify-between gap-4">
               <h3
                 className={cn(
-                  "text-h2 text-display transition-colors duration-300",
+                  "text-display text-[clamp(1.35rem,3.5vw,2rem)] leading-tight transition-colors duration-300",
                   active
                     ? "text-text-primary"
-                    : "text-text-primary/80 group-hover:text-text-primary",
+                    : "text-text-primary/75 group-hover:text-text-primary",
                 )}
               >
                 {service.title}
               </h3>
 
-              <motion.span
+              <span
                 className={cn(
-                  "mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-lg leading-none transition-colors",
+                  "mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-base leading-none transition-all duration-300",
                   active
                     ? "border-text-accent/50 bg-text-accent/10 text-text-accent"
-                    : "border-white/15 text-text-secondary group-hover:border-white/30",
+                    : "border-white/15 text-text-secondary group-hover:border-white/30 group-hover:text-text-primary",
                 )}
-                animate={{ rotate: active ? 45 : 0 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 aria-hidden
               >
-                +
-              </motion.span>
+                {active ? "×" : "+"}
+              </span>
             </div>
 
             <AnimatePresence initial={false}>
-              {active && (
+              {active ? (
                 <motion.p
                   id={`service-desc-${service._id}`}
                   initial={{ height: 0, opacity: 0, marginTop: 0 }}
                   animate={{ height: "auto", opacity: 1, marginTop: 12 }}
                   exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden max-w-xl text-base leading-relaxed text-text-secondary md:text-lg"
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base"
                 >
                   {service.description}
                 </motion.p>
-              )}
+              ) : null}
             </AnimatePresence>
           </div>
         </div>
 
         <span
           className={cn(
-            "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500",
+            "pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500",
             "bg-gradient-to-r from-shape-blue/10 via-transparent to-transparent",
             active && "opacity-100",
           )}

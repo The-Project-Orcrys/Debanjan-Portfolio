@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { CustomCursor } from "@/components/motion/CustomCursor";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { BackToTop } from "@/components/shared/BackToTop";
 import { ReadingProgressBar } from "@/components/shared/ReadingProgressBar";
@@ -18,6 +19,7 @@ export default async function SiteLayout({
 
   return (
     <LenisProvider>
+      <CustomCursor />
       <ReadingProgressBar />
       <a href="#main" className="skip-link">
         Skip to content

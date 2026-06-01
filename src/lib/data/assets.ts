@@ -37,4 +37,12 @@ export const assets = {
     veerangana: `${base}/updates/veerangana.jpg`,
     prototype: `${base}/updates/prototype.jpg`,
   },
+  /** Venture cards on home — one distinct photo per company */
+  products: {
+    orcrys: `${base}/products/orcrys.jpg`,
+    mewayz: `${base}/products/mewayz.jpg`,
+    mewayzIndia: `${base}/products/mewayz-india.jpg`,
+    edquate: `${base}/products/edquate.jpg`,
+    phantomx: `${base}/products/phantomx.jpg`,
+  },
 } as const;

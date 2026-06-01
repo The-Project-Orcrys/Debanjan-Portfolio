@@ -82,7 +82,7 @@ export function ContactLinks({
           </li>
         ))}
         {showAddress ? (
-          <li className="pt-1 text-text-secondary">
+          <li className="pt-1 text-[#a8a8a8]">
             <a
               href={mapsHref(settings.officeAddress ?? CONTACT.officeAddress)}
               target="_blank"

@@ -1,7 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { MetricCounter } from "@/components/shared/MetricCounter";
 import { impactMetrics } from "@/lib/data/founder";
+import { motionPresets } from "@/lib/motionPresets";
 
 const container = {
   hidden: {},
@@ -9,42 +12,73 @@ const container = {
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { y: 10 },
   visible: {
-    opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.45, ease: motionPresets.ease.out },
   },
 };
 
 export function ImpactMetricsStrip() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let ctx: { revert: () => void } | undefined;
+    void (async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      ctx = gsap.context(() => {
+        gsap.from(section.querySelector(".impact-metrics__divider"), {
+          scaleX: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 90%",
+            once: true,
+          },
+        });
+      }, section);
+    })();
+
+    return () => ctx?.revert();
+  }, []);
+
   return (
     <section
-      className="border-y border-white/10 bg-white/[0.02]"
+      ref={sectionRef}
+      className="relative border-y border-white/10 bg-white/[0.02]"
       aria-label="Impact at a glance"
     >
+      <div
+        className="impact-metrics__divider mx-auto h-px max-w-6xl origin-left bg-gradient-to-r from-transparent via-text-accent/40 to-transparent"
+        aria-hidden
+      />
       <motion.ul
-        className="mx-auto grid max-w-6xl list-none grid-cols-2 gap-px bg-white/10 p-0 lg:grid-cols-4"
+        className="impact-metrics__grid mx-auto max-w-6xl list-none p-0"
         variants={container}
-        initial="hidden"
+        initial="visible"
         whileInView="visible"
-        viewport={{ once: true, margin: "-5%" }}
+        viewport={{ once: true }}
       >
         {impactMetrics.map((metric) => (
           <motion.li
             key={metric.label}
             variants={item}
-            className="flex flex-col gap-1 bg-bg-primary px-5 py-6 sm:px-8 sm:py-8"
+            className="impact-metrics__cell"
           >
-            <span className="text-display text-2xl tabular-nums text-text-primary sm:text-3xl">
-              {metric.value}
-            </span>
-            <span className="text-sm font-medium text-text-primary">
-              {metric.label}
-            </span>
-            <span className="text-xs leading-relaxed text-text-secondary">
-              {metric.detail}
-            </span>
+            <MetricCounter
+              value={metric.value}
+              className="impact-metrics__value text-display block tabular-nums"
+            />
+            <span className="impact-metrics__label">{metric.label}</span>
+            <span className="impact-metrics__detail">{metric.detail}</span>
           </motion.li>
         ))}
       </motion.ul>
