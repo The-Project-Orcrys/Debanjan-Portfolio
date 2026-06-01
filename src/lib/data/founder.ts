@@ -127,6 +127,24 @@ export const contactFaq: FaqItem[] = [
     answer:
       "Yes. Select “Venture Partnership” or “General Inquiry” and note press/investment in your message — we'll route it appropriately.",
   },
+  {
+    id: "f6",
+    question: "Do you speak at conferences or run workshops?",
+    answer:
+      "Yes — keynotes and executive workshops on product leadership, platform strategy, cybersecurity movements, and AI ventures. Share event date, audience, and format via the contact form under “Speaking & Advisory”.",
+  },
+  {
+    id: "f7",
+    question: "What budget ranges do you typically work with?",
+    answer:
+      "Scope varies from advisory retainers to full-time leadership. Include timeline, team size, and budget range in your message so we can respond with a tailored engagement model.",
+  },
+  {
+    id: "f8",
+    question: "Can we schedule a call before a formal proposal?",
+    answer:
+      "Absolutely. Use the scheduling link on the contact page or email directly — a 20-minute intro call is usually the fastest path to alignment.",
+  },
 ];
 
 export const impactMetrics = [
@@ -150,6 +168,86 @@ export const impactMetrics = [
     label: "Reply window",
     detail: "Typical response for partnership inquiries",
   },
+] as const;
+
+export const workProcess = [
+  {
+    step: "01",
+    title: "Discover",
+    description:
+      "Stakeholder interviews, market signals, and metric baselines — clarity on the problem worth solving.",
+  },
+  {
+    step: "02",
+    title: "Design",
+    description:
+      "Narrative, roadmap, and experience architecture — prototypes and alignment before heavy build.",
+  },
+  {
+    step: "03",
+    title: "Deliver",
+    description:
+      "Ship in measurable increments — GTM, community, and iteration tied to outcomes investors and users care about.",
+  },
+] as const;
+
+export const speakingTopics = [
+  {
+    id: "s1",
+    title: "Building movements, not just products",
+    description:
+      "How cybersecurity, AI sovereignty, and community-led growth turn users into defenders and advocates.",
+    format: "Keynote · 45–60 min",
+  },
+  {
+    id: "s2",
+    title: "The unified business OS",
+    description:
+      "Replacing SaaS sprawl with modular platforms — lessons from scaling Mewayz across 150+ modules.",
+    format: "Workshop · Half-day",
+  },
+  {
+    id: "s3",
+    title: "Founder-grade product leadership",
+    description:
+      "CPO patterns for 0→1 and scale-up — narrative, metrics, and cross-functional velocity.",
+    format: "Panel · Fireside",
+  },
+  {
+    id: "s4",
+    title: "AI, safety, and social impact",
+    description:
+      "Hardware + software ventures (Veerangana, NGSAA) — building trust at national scale.",
+    format: "University · Startup forum",
+  },
+] as const;
+
+export const techStackGroups = [
+  {
+    category: "Product & design",
+    items: ["Figma", "Notion", "Miro", "Linear", "Amplitude"],
+  },
+  {
+    category: "Engineering & data",
+    items: ["Next.js", "React", "TypeScript", "Sanity CMS", "PostHog"],
+  },
+  {
+    category: "Growth & ops",
+    items: ["HubSpot-style funnels", "Community loops", "OKRs", "Agile delivery"],
+  },
+  {
+    category: "AI & security",
+    items: ["LLM product design", "Threat modeling", "Mobile security UX", "No-code platforms"],
+  },
+] as const;
+
+export const venturePartners = [
+  { name: "Mewayz", href: "https://mewayz.com/" },
+  { name: "PhantomX", href: "https://www.phantomx.tech/" },
+  { name: "Orcrys", href: "https://orcrys.com/" },
+  { name: "Edquate", href: "https://edquate.com/" },
+  { name: "Veerangana", href: "#products" },
+  { name: "NGSAA", href: "#products" },
 ] as const;
 
 export const executiveQuotes = [

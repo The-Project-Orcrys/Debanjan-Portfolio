@@ -3,6 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { BackToTop } from "@/components/shared/BackToTop";
+import { ReadingProgressBar } from "@/components/shared/ReadingProgressBar";
 import { StickyMobileContact } from "@/components/shared/StickyMobileContact";
 import { getSiteSettings } from "@/lib/data/fetch";
 import { getResumeUrl } from "@/lib/site/resume.server";
@@ -17,6 +18,7 @@ export default async function SiteLayout({
 
   return (
     <LenisProvider>
+      <ReadingProgressBar />
       <a href="#main" className="skip-link">
         Skip to content
       </a>

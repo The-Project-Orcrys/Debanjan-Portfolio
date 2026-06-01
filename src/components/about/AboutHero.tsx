@@ -9,7 +9,7 @@ export function AboutHero({
   location: string;
 }) {
   return (
-    <section className="section-padding pt-28">
+    <section className="section-padding !pt-0">
       <SplitName
         firstName={settings.firstName}
         lastName={settings.lastName}

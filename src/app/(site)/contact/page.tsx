@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { ContactPageSection } from "@/components/contact/ContactPageSection";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { FaqSection } from "@/components/contact/FaqSection";
 import { ScheduleSection } from "@/components/contact/ScheduleSection";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -40,6 +41,12 @@ export default async function ContactPage() {
   return (
     <>
       <JsonLd data={schema} />
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Contact" },
+        ]}
+      />
       <Suspense>
         <ContactPageSection settings={settings} />
       </Suspense>

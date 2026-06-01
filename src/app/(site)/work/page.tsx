@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { WorkHero } from "@/components/work/WorkHero";
 import { SidebarNav } from "@/components/work/SidebarNav";
 import { WorkMobileNav } from "@/components/work/WorkMobileNav";
@@ -49,6 +50,12 @@ export default async function WorkPage() {
   return (
     <>
       <JsonLd data={schema} />
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Work" },
+        ]}
+      />
       <WorkHero settings={settings} />
       <div className="section-padding grid gap-10 lg:grid-cols-[200px_1fr] lg:gap-16">
         <SidebarNav projects={projects} />

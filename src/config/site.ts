@@ -19,10 +19,22 @@ export const ROUTES = {
 /** Home page in-page navigation (hash links). */
 export const HOME_SECTION_ANCHORS = [
   { id: "engage", href: ROUTES.engage, label: "Partner" },
+  { id: "services", href: "/#services", label: "Services" },
   { id: "products", href: ROUTES.products, label: "Ventures" },
+  { id: "work-preview", href: "/#work-preview", label: "Work" },
+  { id: "process", href: "/#process", label: "Process" },
   { id: "timeline", href: ROUTES.timeline, label: "Timeline" },
+  { id: "speaking", href: "/#speaking", label: "Speaking" },
   { id: "highlights", href: ROUTES.highlights, label: "Focus" },
 ] as const;
+
+export const ROUTES_WITH_ANCHORS = {
+  ...ROUTES,
+  services: "/#services",
+  workPreview: "/#work-preview",
+  process: "/#process",
+  speaking: "/#speaking",
+} as const;
 
 export const NAV_LINKS = [
   { href: ROUTES.about, label: "About" },

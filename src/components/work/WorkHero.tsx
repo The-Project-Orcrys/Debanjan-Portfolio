@@ -3,7 +3,7 @@ import type { SiteSettings } from "@/types/content";
 
 export function WorkHero({ settings }: { settings: SiteSettings }) {
   return (
-    <section className="section-padding pt-28">
+    <section className="section-padding !pt-0">
       <h1 className="sr-only">Work and case studies</h1>
       <SplitName
         firstName={settings.firstName}

@@ -2,6 +2,7 @@ import { ContactChannelCard } from "@/components/contact/ContactChannelCard";
 import { ContactForm } from "@/components/shared/ContactForm";
 import { FounderActionLinksServer } from "@/components/shared/FounderActionLinksServer";
 import { CopyEmailButton } from "@/components/shared/CopyEmailButton";
+import { DownloadVCardButton } from "@/components/shared/DownloadVCardButton";
 import { CONTACT, mapsHref, phoneHref, whatsappHref } from "@/lib/data/contact";
 import type { SiteSettings } from "@/types/content";
 
@@ -53,7 +54,7 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
   return (
     <div>
       {/* Hero */}
-      <section className="section-padding border-b border-white/10 pt-[max(6.5rem,env(safe-area-inset-top))] sm:pt-28">
+      <section className="section-padding border-b border-white/10 !pt-4">
         <p className="text-sm uppercase tracking-[0.25em] text-text-accent">
           Contact
         </p>
@@ -70,7 +71,10 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
         <p className="mt-4 text-sm text-text-secondary">
           Typical response time: 1–2 business days
         </p>
-        <FounderActionLinksServer className="mt-6" primary />
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <FounderActionLinksServer primary />
+          <DownloadVCardButton settings={settings} />
+        </div>
       </section>
 
       {/* Channels */}

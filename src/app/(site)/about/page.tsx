@@ -1,4 +1,5 @@
 import { AboutHero } from "@/components/about/AboutHero";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { AwardsBoard } from "@/components/about/AwardsBoard";
 import { BioSection } from "@/components/about/BioSection";
 import { SkillsStrip } from "@/components/about/SkillsStrip";
@@ -57,6 +58,12 @@ export default async function AboutPage() {
   return (
     <>
       <JsonLd data={schema} />
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "About" },
+        ]}
+      />
       <AboutHero settings={settings} location={about.location} />
       <BioSection about={about} />
       <SkillsStrip settings={settings} />

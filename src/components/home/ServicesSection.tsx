@@ -33,7 +33,11 @@ export function ServicesSection({ services }: { services: ServiceBlock[] }) {
   if (!activeService) return null;
 
   return (
-    <section className="services-section relative overflow-hidden border-t border-white/10">
+    <section
+      id="services"
+      className="services-section relative overflow-hidden border-t border-white/10"
+      aria-labelledby="services-heading"
+    >
       <div className="services-section__ambient" aria-hidden />
 
       <div className="section-padding relative z-[1]">
@@ -41,7 +45,7 @@ export function ServicesSection({ services }: { services: ServiceBlock[] }) {
           <p className="text-sm uppercase tracking-[0.2em] text-text-accent">
             {SECTION_COPY.services.eyebrow}
           </p>
-          <h2 className="text-display mt-4 max-w-3xl text-h2">
+          <h2 id="services-heading" className="text-display mt-4 max-w-3xl text-h2">
             {SECTION_COPY.services.title}
           </h2>
         </ScrollReveal>

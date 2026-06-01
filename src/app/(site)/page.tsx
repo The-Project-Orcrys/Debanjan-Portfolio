@@ -1,6 +1,8 @@
 import { AboutTeaser } from "@/components/home/AboutTeaser";
 import { EngagementSection } from "@/components/home/EngagementSection";
+import { FeaturedWorkStrip } from "@/components/home/FeaturedWorkStrip";
 import { FolderCTA } from "@/components/home/FolderCTA";
+import { HowIWorkSection } from "@/components/home/HowIWorkSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { HomeSectionNav } from "@/components/home/HomeSectionNav";
 import { ImpactMetricsStrip } from "@/components/home/ImpactMetricsStrip";
@@ -8,6 +10,9 @@ import { LeadershipTimeline } from "@/components/home/LeadershipTimeline";
 import { NewsHighlights } from "@/components/home/NewsHighlights";
 import { PhotoCollage } from "@/components/home/PhotoCollage";
 import { ProductsSection } from "@/components/home/ProductsSection";
+import { SpeakingTopicsSection } from "@/components/home/SpeakingTopicsSection";
+import { TechStackStrip } from "@/components/home/TechStackStrip";
+import { VenturePartnersStrip } from "@/components/home/VenturePartnersStrip";
 import { RecognitionStrip } from "@/components/home/RecognitionStrip";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { TestimonialsStrip } from "@/components/home/TestimonialsStrip";
@@ -83,11 +88,16 @@ export default async function HomePage() {
       />
       <HomeSectionNav />
       <ImpactMetricsStrip />
+      <VenturePartnersStrip />
       <EngagementSection />
       <ServicesSection services={services} />
       <ProductsSection />
+      <FeaturedWorkStrip projects={projects} />
+      <HowIWorkSection />
       <FolderCTA projects={projects} />
       <LeadershipTimeline />
+      <SpeakingTopicsSection />
+      <TechStackStrip />
       <AboutTeaser photoUrl={about.photoUrl} />
       <ValueProps items={defaultValueProps} />
       <NewsHighlights updates={updates} />
