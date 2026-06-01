@@ -12,6 +12,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_POSTHOG_HOST?: string;
     NEXT_PUBLIC_RESUME_URL?: string;
     NEXT_PUBLIC_CALENDAR_URL?: string;
+    NEXT_PUBLIC_CALENDAR_EMBED_URL?: string;
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?: string;
     SENTRY_DSN?: string;
   }

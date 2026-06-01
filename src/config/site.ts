@@ -8,11 +8,21 @@ export const ROUTES = {
   about: "/about",
   work: "/work",
   contact: "/contact",
+  resume: "/resume",
   products: "/#products",
   engage: "/#engage",
   timeline: "/#timeline",
+  highlights: "/#highlights",
   studio: "/studio",
 } as const;
+
+/** Home page in-page navigation (hash links). */
+export const HOME_SECTION_ANCHORS = [
+  { id: "engage", href: ROUTES.engage, label: "Partner" },
+  { id: "products", href: ROUTES.products, label: "Ventures" },
+  { id: "timeline", href: ROUTES.timeline, label: "Timeline" },
+  { id: "highlights", href: ROUTES.highlights, label: "Focus" },
+] as const;
 
 export const NAV_LINKS = [
   { href: ROUTES.about, label: "About" },
@@ -25,6 +35,7 @@ export const FOOTER_EXPLORE_LINKS = [
   { href: ROUTES.home, label: "Home" },
   { href: ROUTES.about, label: "About" },
   { href: ROUTES.work, label: "Work" },
+  { href: ROUTES.resume, label: "Résumé" },
   { href: ROUTES.products, label: "Ventures" },
   { href: ROUTES.engage, label: "Partner with me" },
   { href: ROUTES.contact, label: "Contact" },

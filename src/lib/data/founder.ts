@@ -134,12 +134,21 @@ export const executiveQuotes = [
     id: "q1",
     quote:
       "Debanjan brings product soul and execution velocity — he doesn't separate strategy from shipping.",
-    attribution: "Product & growth collaborator",
+    attribution: "Growth lead · SaaS platform partner",
+    context: "Mewayz ecosystem",
   },
   {
     id: "q2",
     quote:
-      "Rare blend of narrative, systems thinking, and hands-on leadership across security and SaaS.",
-    attribution: "Venture advisor",
+      "Rare blend of narrative, systems thinking, and hands-on leadership across security and community movements.",
+    attribution: "Advisor · Cyber readiness initiative",
+    context: "PhantomX launch",
+  },
+  {
+    id: "q3",
+    quote:
+      "He frames ventures as movements, not slide decks — and still owns the roadmap Monday morning.",
+    attribution: "Founder · Venture studio collaborator",
+    context: "Orcrys portfolio",
   },
 ] as const;

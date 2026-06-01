@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLenis } from "@/components/motion/LenisProvider";
-import { NAV_LINKS } from "@/config/site";
+import { NAV_LINKS, ROUTES } from "@/config/site";
 import { phoneHref } from "@/lib/data/contact";
 import { cn } from "@/lib/utils";
 import type { SiteSettings } from "@/types/content";
@@ -23,12 +23,25 @@ const contactLinks = (settings: SiteSettings) => [
   })),
 ];
 
-export function Navbar({ settings }: { settings: SiteSettings }) {
+export function Navbar({
+  settings,
+  resumeUrl,
+}: {
+  settings: SiteSettings;
+  resumeUrl?: string | null;
+}) {
   const pathname = usePathname();
   const lenis = useLenis();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const contacts = contactLinks(settings);
+  const navLinks = resumeUrl
+    ? [
+        ...NAV_LINKS.filter((l) => l.href !== ROUTES.contact),
+        { href: ROUTES.resume, label: "Résumé" },
+        { href: ROUTES.contact, label: "Contact" },
+      ]
+    : [...NAV_LINKS];
 
   useEffect(() => {
     const onScroll = (y: number) => setScrolled(y > 16);
@@ -82,7 +95,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
             aria-label="Primary"
           >
             <ul className="flex items-center gap-1 rounded-full bg-white/[0.04] p-1">
-              {NAV_LINKS.map((link) => {
+              {navLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
                   <li key={link.href}>
@@ -185,7 +198,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
               className="fixed inset-x-3 top-[4.25rem] z-50 overflow-hidden rounded-3xl border border-white/10 bg-bg-primary/95 shadow-[0_24px_80px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
             >
               <nav className="flex flex-col p-4" aria-label="Mobile">
-                {NAV_LINKS.map((link, i) => (
+                {navLinks.map((link, i) => (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, x: -12 }}

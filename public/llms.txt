@@ -12,6 +12,7 @@
 - Home: /
 - About: /about
 - Work (case studies): /work
+- Résumé (PDF): /resume
 - Contact: /contact
 
 ## Ventures & products

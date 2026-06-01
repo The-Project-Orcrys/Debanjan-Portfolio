@@ -43,7 +43,14 @@ public/images/          # Portfolio photography & OG
 
 ## Environment
 
-See `.env.example` — Sanity, Resend (`CONTACT_EMAIL=ceo@orcrys.com`), PostHog, Sentry, `NEXT_PUBLIC_SITE_URL`.
+See `.env.example` — Sanity, Resend (`CONTACT_EMAIL=ceo@orcrys.com`), PostHog, Sentry, `NEXT_PUBLIC_SITE_URL`, optional `NEXT_PUBLIC_CALENDAR_URL` for embedded scheduling on `/contact`.
+
+## Deploy (Vercel)
+
+1. Import the GitHub repo and set **Root Directory** to the project root.
+2. Environment variables: `NEXT_PUBLIC_SITE_URL` (production URL), `CONTACT_EMAIL`, `RESEND_API_KEY`, `FROM_EMAIL` (verified domain).
+3. Run `npm run images:import` locally before push if you add photos under `assests/`; commit the generated `public/images/*.jpg` and `public/resume/*.pdf`.
+4. Optional: `NEXT_PUBLIC_CALENDAR_URL` (Calendly), `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, PostHog, Sentry.
 
 ## Scripts
 
@@ -53,7 +60,8 @@ See `.env.example` — Sanity, Resend (`CONTACT_EMAIL=ceo@orcrys.com`), PostHog,
 | `npm run build` | Production build |
 | `npm run lint` | ESLint |
 | `npm run seed:sanity` | Push defaults to Sanity |
-| `npm run images:import` | Copy photos from `assests/` to `public/images/` |
+| `npm run images:import` | Copy photos from `assests/` to `public/images/` + résumé PDF |
+| `npm run resume:copy` | Copy `Profile.pdf` to `public/resume/` |
 
 ## Sanity CMS
 

@@ -104,4 +104,16 @@ slugs.forEach((slug, si) => {
   }
 });
 
+const resumeSources = [
+  join(root, "Profile.pdf"),
+  join(srcDir, "Profile.pdf"),
+];
+const resumeOut = join(root, "public", "resume", "debanjan-sandhaki-resume.pdf");
+ensureDir(join(root, "public", "resume"));
+const resumeSrc = resumeSources.find((p) => existsSync(p));
+if (resumeSrc) {
+  cp(resumeSrc, resumeOut);
+  console.log("Copied Profile.pdf to public/resume/debanjan-sandhaki-resume.pdf");
+}
+
 console.log("Imported images from assests/ to public/images/");

@@ -1,6 +1,7 @@
 import { AboutHero } from "@/components/about/AboutHero";
 import { AwardsBoard } from "@/components/about/AwardsBoard";
 import { BioSection } from "@/components/about/BioSection";
+import { SkillsStrip } from "@/components/about/SkillsStrip";
 import { UpdatesSection } from "@/components/about/UpdatesSection";
 import { ContactCTA } from "@/components/shared/ContactCTA";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -58,6 +59,7 @@ export default async function AboutPage() {
       <JsonLd data={schema} />
       <AboutHero settings={settings} location={about.location} />
       <BioSection about={about} />
+      <SkillsStrip settings={settings} />
       <AwardsBoard items={recognitions} />
       <UpdatesSection items={updates} />
       <ContactCTA settings={settings} />

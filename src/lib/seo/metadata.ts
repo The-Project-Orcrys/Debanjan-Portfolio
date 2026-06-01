@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getSiteSettings } from "@/lib/data/fetch";
 import { buildCanonical, getSiteUrl } from "@/lib/seo/config";
+import { resolveOgImagePath } from "@/lib/site/og-image";
 
 export interface PageMetadataOptions {
   title: string;
@@ -16,9 +17,11 @@ export interface PageMetadataOptions {
 }
 
 function resolveImageUrl(image?: string, siteUrl?: string) {
-  if (!image) return `${siteUrl}/opengraph-image`;
-  if (image.startsWith("http")) return image;
-  return `${siteUrl}${image.startsWith("/") ? image : `/${image}`}`;
+  const path = resolveOgImagePath(image);
+  if (!siteUrl) return path;
+  if (path === "/opengraph-image") return `${siteUrl}/opengraph-image`;
+  if (path.startsWith("http")) return path;
+  return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 export async function buildPageMetadata(

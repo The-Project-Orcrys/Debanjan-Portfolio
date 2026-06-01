@@ -3,7 +3,7 @@ import { FooterBackground } from "@/components/layout/FooterBackground";
 import { FooterLogoMark } from "@/components/layout/FooterLogoMark";
 import { FOOTER_EXPLORE_LINKS } from "@/config/site";
 import { ContactLinks } from "@/components/shared/ContactLinks";
-import { FounderActionTextLinks } from "@/components/shared/FounderActionLinks";
+import { FounderActionTextLinksServer } from "@/components/shared/FounderActionLinksServer";
 import type { SiteSettings } from "@/types/content";
 
 export function Footer({ settings }: { settings: SiteSettings }) {
@@ -34,7 +34,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
               ))}
             </ul>
             <div className="mt-5">
-              <FounderActionTextLinks />
+              <FounderActionTextLinksServer />
             </div>
           </div>
 

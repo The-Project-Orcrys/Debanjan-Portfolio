@@ -13,7 +13,7 @@ export function TestimonialsStrip() {
         </p>
       </ScrollReveal>
 
-      <ul className="mt-8 grid list-none gap-6 p-0 md:grid-cols-2 md:gap-8">
+      <ul className="mt-8 grid list-none gap-6 p-0 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
         {executiveQuotes.map((item) => (
           <li key={item.id}>
             <ScrollReveal>
@@ -22,7 +22,12 @@ export function TestimonialsStrip() {
                   &ldquo;{item.quote}&rdquo;
                 </p>
                 <footer className="mt-4 text-sm text-text-secondary">
-                  — {item.attribution}
+                  <span className="block text-text-primary">— {item.attribution}</span>
+                  {"context" in item && item.context ? (
+                    <span className="mt-1 block text-xs uppercase tracking-widest">
+                      {item.context}
+                    </span>
+                  ) : null}
                 </footer>
               </blockquote>
             </ScrollReveal>

@@ -1,6 +1,6 @@
 import { ContactChannelCard } from "@/components/contact/ContactChannelCard";
 import { ContactForm } from "@/components/shared/ContactForm";
-import { FounderActionLinks } from "@/components/shared/FounderActionLinks";
+import { FounderActionLinksServer } from "@/components/shared/FounderActionLinksServer";
 import { CopyEmailButton } from "@/components/shared/CopyEmailButton";
 import { CONTACT, mapsHref, phoneHref, whatsappHref } from "@/lib/data/contact";
 import type { SiteSettings } from "@/types/content";
@@ -70,7 +70,7 @@ export function ContactPageSection({ settings }: { settings: SiteSettings }) {
         <p className="mt-4 text-sm text-text-secondary">
           Typical response time: 1–2 business days
         </p>
-        <FounderActionLinks className="mt-6" primary />
+        <FounderActionLinksServer className="mt-6" primary />
       </section>
 
       {/* Channels */}

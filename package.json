@@ -11,7 +11,8 @@
     "sanity": "sanity dev --config ./src/cms/sanity.config.ts",
     "seed:sanity": "node --env-file=.env.local scripts/seed-sanity.mjs",
     "images:placeholders": "node scripts/generate-image-placeholders.mjs",
-    "images:import": "node scripts/import-assets.mjs"
+    "images:import": "node scripts/import-assets.mjs",
+    "resume:copy": "node scripts/copy-resume.mjs"
   },
   "postcss": {
     "plugins": {

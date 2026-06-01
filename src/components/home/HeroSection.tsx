@@ -10,6 +10,7 @@ import { useHeroMouseParallax } from "@/components/motion/useHeroMouseParallax";
 import { GeometricShape } from "@/components/shared/GeometricShape";
 import { CopyTag } from "@/components/shared/CopyTag";
 import { FounderActionLinks } from "@/components/shared/FounderActionLinks";
+import { ShareProfileButton } from "@/components/shared/ShareProfileButton";
 import { LottiePlayer } from "@/components/shared/LottiePlayer";
 import { HERO, ROUTES } from "@/config/site";
 import { ventureQuickLinks } from "@/lib/data/products";
@@ -45,9 +46,15 @@ function HeroArrow() {
 export function HeroSection({
   settings,
   shapes,
+  resumeUrl = null,
+  calendarUrl = null,
+  shareUrl,
 }: {
   settings: SiteSettings;
   shapes: ShapeConfig[];
+  resumeUrl?: string | null;
+  calendarUrl?: string | null;
+  shareUrl: string;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useHeroMouseParallax<HTMLDivElement>(0.85);
@@ -200,7 +207,15 @@ export function HeroSection({
                   Ventures
                 </Link>
               </div>
-              <FounderActionLinks />
+              <FounderActionLinks
+                resumeUrl={resumeUrl}
+                calendarUrl={calendarUrl}
+              />
+              <ShareProfileButton
+                url={shareUrl}
+                title={settings.siteTitle}
+                className="mt-1"
+              />
             </div>
 
             <ul className="hero-stats mt-6 border-t border-white/10 pt-5 text-sm sm:mt-8 sm:flex sm:flex-wrap sm:gap-6 sm:pt-6 md:mt-10">

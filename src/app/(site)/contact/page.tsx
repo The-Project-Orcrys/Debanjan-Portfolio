@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { ContactPageSection } from "@/components/contact/ContactPageSection";
 import { FaqSection } from "@/components/contact/FaqSection";
+import { ScheduleSection } from "@/components/contact/ScheduleSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CONTACT } from "@/lib/data/contact";
 import { contactFaq } from "@/lib/data/founder";
@@ -42,6 +43,7 @@ export default async function ContactPage() {
       <Suspense>
         <ContactPageSection settings={settings} />
       </Suspense>
+      <ScheduleSection />
       <FaqSection />
     </>
   );

@@ -2,6 +2,7 @@ import { AboutTeaser } from "@/components/home/AboutTeaser";
 import { EngagementSection } from "@/components/home/EngagementSection";
 import { FolderCTA } from "@/components/home/FolderCTA";
 import { HeroSection } from "@/components/home/HeroSection";
+import { HomeSectionNav } from "@/components/home/HomeSectionNav";
 import { LeadershipTimeline } from "@/components/home/LeadershipTimeline";
 import { NewsHighlights } from "@/components/home/NewsHighlights";
 import { PhotoCollage } from "@/components/home/PhotoCollage";
@@ -28,6 +29,9 @@ import {
 import { keywordsForHome } from "@/lib/seo/keywords";
 import { buildWebPageSchema } from "@/lib/seo/jsonld";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getCalendarUrl } from "@/lib/site/calendar";
+import { getResumeUrl } from "@/lib/site/resume.server";
+import { getSiteUrl } from "@/lib/seo/config";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();
@@ -57,6 +61,8 @@ export default async function HomePage() {
     getUpdates(),
   ]);
   const services = getFeaturedServices(allServices);
+  const [resumeUrl, calendarUrl] = [getResumeUrl(), getCalendarUrl()];
+  const siteUrl = getSiteUrl();
 
   const webPageSchema = buildWebPageSchema({
     name: `${settings.siteTitle} — Home`,
@@ -67,7 +73,14 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={webPageSchema} />
-      <HeroSection settings={settings} shapes={defaultShapes} />
+      <HeroSection
+        settings={settings}
+        shapes={defaultShapes}
+        resumeUrl={resumeUrl}
+        calendarUrl={calendarUrl}
+        shareUrl={siteUrl}
+      />
+      <HomeSectionNav />
       <EngagementSection />
       <ServicesSection services={services} />
       <ProductsSection />
