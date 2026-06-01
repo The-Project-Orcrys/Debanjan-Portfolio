@@ -1,0 +1,36 @@
+"use client";
+
+import { PortfolioImage } from "@/components/shared/PortfolioImage";
+import { VideoLoop } from "@/components/shared/VideoLoop";
+import { cn } from "@/lib/utils";
+import type { GalleryItem } from "@/types/content";
+
+export function MediaGalleryItem({
+  item,
+  sizes = "(max-width: 768px) 100vw, 33vw",
+  className,
+}: {
+  item: GalleryItem;
+  sizes?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "group relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-bg-secondary ring-1 ring-transparent transition-[box-shadow,ring-color] duration-500 hover:ring-border/40 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)]",
+        className,
+      )}
+    >
+      {item.type === "video" && item.videoUrl ? (
+        <VideoLoop src={item.videoUrl} className="h-full w-full" />
+      ) : item.imageUrl ? (
+        <PortfolioImage
+          src={item.imageUrl}
+          alt={item.alt}
+          sizes={sizes}
+          className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
+        />
+      ) : null}
+    </div>
+  );
+}

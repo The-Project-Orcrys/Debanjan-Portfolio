@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Debanjan Sandhaki — Executive Portfolio
 
-## Getting Started
+Production-ready portfolio for a **founder / CEO profile**: product leadership, venture building (Orcrys, Mewayz, PhantomX, Edquate), case studies, and contact.
 
-First, run the development server:
+**Stack:** Next.js 16 · TypeScript · Tailwind CSS 4 · GSAP · Lenis · Framer Motion · Sanity (optional) · Resend · PostHog · Sentry
+
+## Quick start
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Without Sanity, content loads from `src/lib/data/defaults.ts`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/              # Routes, API, metadata
+├── components/       # UI by feature (home, work, about, contact, layout)
+├── config/           # Nav, founder copy, inquiry types (site.ts)
+├── lib/
+│   ├── data/         # Defaults, products, contact, fetch
+│   └── seo/          # Metadata, keywords, JSON-LD
+├── styles/           # globals.css, tokens
+└── types/            # Content models
+docs/ARCHITECTURE.md    # Deeper technical overview
+scripts/                # Sanity seed, image import
+public/images/          # Portfolio photography & OG
+```
 
-## Learn More
+## Customize
 
-To learn more about Next.js, take a look at the following resources:
+| What | Where |
+|------|--------|
+| Bio, services, work | `src/lib/data/defaults.ts` |
+| Venture URLs & blurbs | `src/lib/data/products.ts` |
+| Email, phone, office | `src/lib/data/contact.ts` |
+| Nav & section labels | `src/config/site.ts` |
+| Photos | `assests/` → `npm run images:import` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `.env.example` — Sanity, Resend (`CONTACT_EMAIL=ceo@orcrys.com`), PostHog, Sentry, `NEXT_PUBLIC_SITE_URL`.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run seed:sanity` | Push defaults to Sanity |
+| `npm run images:import` | Copy photos from `assests/` to `public/images/` |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Sanity CMS
+
+1. Create a project at [sanity.io](https://www.sanity.io)
+2. Configure `.env.local` and open `/studio`
+3. `npm run seed:sanity` then upload images in Studio
+4. Webhook: `POST /api/revalidate` with `x-sanity-secret`
+
+## Deploy checklist
+
+Before going live:
+
+1. Set `NEXT_PUBLIC_SITE_URL` to your production domain (e.g. `https://debanjansandhaki.com`).
+2. Configure Resend: `RESEND_API_KEY`, `CONTACT_EMAIL`, `FROM_EMAIL` — test `/contact`.
+3. Run `npm run images:import` whenever you replace photos in `assests/`.
+4. Run `npm run build` and fix any errors.
+5. Optional Sanity: set `NEXT_PUBLIC_SANITY_PROJECT_ID`, run `npm run seed:sanity`, add webhook to `POST /api/revalidate`.
+
+## SEO
+
+Per-route metadata, OG image (`/images/og.jpg` after import, or `/opengraph-image`), JSON-LD (`Person`, `WebSite`, `ProfessionalService`, case studies), sitemap, and `robots.txt` (blocks `/studio`, `/api`).
+
+Optional: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` for Search Console.
