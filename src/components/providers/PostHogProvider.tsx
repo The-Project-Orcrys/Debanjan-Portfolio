@@ -2,8 +2,9 @@
 
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { hasAnalyticsConsent } from "@/lib/analytics/consent";
 
 function PostHogPageView() {
   const pathname = usePathname();
@@ -20,17 +21,38 @@ function PostHogPageView() {
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  const [enabled, setEnabled] = useState(false);
+
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
     if (!key) return;
 
-    posthog.init(key, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-      capture_pageview: false,
-    });
+    let initialized = false;
+
+    const tryInit = () => {
+      if (!hasAnalyticsConsent()) return;
+      if (!initialized) {
+        posthog.init(key, {
+          api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+          capture_pageview: false,
+        });
+        initialized = true;
+      }
+      setEnabled(true);
+    };
+
+    tryInit();
+
+    const onConsent = () => tryInit();
+    window.addEventListener("analytics-consent", onConsent);
+    return () => window.removeEventListener("analytics-consent", onConsent);
   }, []);
 
   if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+    return <>{children}</>;
+  }
+
+  if (!enabled) {
     return <>{children}</>;
   }
 

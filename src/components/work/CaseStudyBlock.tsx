@@ -32,6 +32,25 @@ export function CaseStudyBlock({
             <span className="text-text-secondary">{project.year}</span>
           </div>
           <p className="mt-2 text-text-secondary">{project.category}</p>
+
+          {project.outcomes && project.outcomes.length > 0 ? (
+            <ul className="mt-6 flex flex-wrap gap-3">
+              {project.outcomes.map((o) => (
+                <li
+                  key={o.label}
+                  className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3"
+                >
+                  <span className="block text-lg font-medium tabular-nums text-text-accent">
+                    {o.value}
+                  </span>
+                  <span className="text-xs uppercase tracking-widest text-text-secondary">
+                    {o.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
           {project.liveUrl && (
             <Link
               href={project.liveUrl}

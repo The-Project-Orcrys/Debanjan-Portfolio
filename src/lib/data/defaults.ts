@@ -241,6 +241,7 @@ export const defaultUpdates: UpdateItem[] = [
   {
     _id: "u1",
     number: 1,
+    period: "2025 · Present",
     title: "Chief Product Officer at Mewayz",
     description:
       "Leading product vision for a category-defining platform unifying CRM, social, payments, booking, marketplace, automation, and more into one no-code ecosystem for modern business owners.",
@@ -250,6 +251,7 @@ export const defaultUpdates: UpdateItem[] = [
   {
     _id: "u2",
     number: 2,
+    period: "2025",
     title: "PhantomX — The Rise of Human Firewalls",
     description:
       "Co-founded PhantomX to redefine mobile security with AI, behavior analytics, and gamified threat awareness — building India's largest user army against spyware and cyber fraud.",
@@ -259,6 +261,7 @@ export const defaultUpdates: UpdateItem[] = [
   {
     _id: "u3",
     number: 3,
+    period: "2024 — 2025",
     title: "Veerangana Alpha Prototype",
     description:
       "AI-powered SafetySmart Ring with SOS, GPS, biometrics, and threat detection — empowering women with an always-on guardian. Hardware prototyping in progress with patent filing underway.",
@@ -310,6 +313,11 @@ export const defaultWorkProjects: WorkProject[] = [
     role: "Chief Product Officer · Full-time · Remote (Delaware, US)",
     order: 0,
     galleryCount: 6,
+    outcomes: [
+      { label: "Modules", value: "150+" },
+      { label: "Scope", value: "Full business OS" },
+      { label: "Model", value: "No-code scale" },
+    ],
   }),
   project({
     _id: "p2",
@@ -330,6 +338,11 @@ export const defaultWorkProjects: WorkProject[] = [
     role: "Co-founder & Chief Executive Officer · Full-time · Remote (Indore, India)",
     order: 1,
     galleryCount: 5,
+    outcomes: [
+      { label: "Mission", value: "800M+ users" },
+      { label: "Focus", value: "Human firewalls" },
+      { label: "Stack", value: "AI + mobile" },
+    ],
   }),
   project({
     _id: "p3",

@@ -1,7 +1,7 @@
 import { WorkHero } from "@/components/work/WorkHero";
 import { SidebarNav } from "@/components/work/SidebarNav";
 import { WorkMobileNav } from "@/components/work/WorkMobileNav";
-import { CaseStudyBlock } from "@/components/work/CaseStudyBlock";
+import { WorkProjectList } from "@/components/work/WorkProjectList";
 import { ContactCTA } from "@/components/shared/ContactCTA";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteSettings, getWorkProjects } from "@/lib/data/fetch";
@@ -54,13 +54,7 @@ export default async function WorkPage() {
         <SidebarNav projects={projects} />
         <div className="min-w-0">
           <WorkMobileNav projects={projects} />
-          {projects.map((project, index) => (
-            <CaseStudyBlock
-              key={project._id}
-              project={project}
-              index={index}
-            />
-          ))}
+          <WorkProjectList projects={projects} />
         </div>
       </div>
       <section className="section-padding border-t border-white/10">

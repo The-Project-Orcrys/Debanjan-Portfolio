@@ -58,6 +58,11 @@ export interface GalleryItem {
   span?: "full" | "half" | "third";
 }
 
+export type ProjectOutcome = {
+  label: string;
+  value: string;
+};
+
 export interface WorkProject {
   _id: string;
   title: string;
@@ -72,6 +77,7 @@ export interface WorkProject {
   order: number;
   coverImageUrl: string;
   gallery: GalleryItem[];
+  outcomes?: ProjectOutcome[];
 }
 
 export interface ServiceBlock {
@@ -103,6 +109,8 @@ export interface UpdateItem {
   description: string;
   externalUrl?: string;
   imageUrls: string[];
+  /** Display period e.g. "2025 · Present" */
+  period?: string;
 }
 
 export interface ContactFormData {

@@ -129,6 +129,29 @@ export const contactFaq: FaqItem[] = [
   },
 ];
 
+export const impactMetrics = [
+  {
+    value: "150+",
+    label: "Platform modules",
+    detail: "Unified Mewayz business OS scope",
+  },
+  {
+    value: "800M+",
+    label: "Users in mission",
+    detail: "PhantomX mobile security addressable market",
+  },
+  {
+    value: "4",
+    label: "Active ventures",
+    detail: "Mewayz · PhantomX · Edquate · Orcrys",
+  },
+  {
+    value: "1–2d",
+    label: "Reply window",
+    detail: "Typical response for partnership inquiries",
+  },
+] as const;
+
 export const executiveQuotes = [
   {
     id: "q1",

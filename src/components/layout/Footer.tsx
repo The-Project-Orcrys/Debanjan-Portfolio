@@ -3,6 +3,7 @@ import { FooterBackground } from "@/components/layout/FooterBackground";
 import { FooterLogoMark } from "@/components/layout/FooterLogoMark";
 import { FOOTER_EXPLORE_LINKS } from "@/config/site";
 import { ContactLinks } from "@/components/shared/ContactLinks";
+import { LocalTime } from "@/components/shared/LocalTime";
 import { FounderActionTextLinksServer } from "@/components/shared/FounderActionLinksServer";
 import type { SiteSettings } from "@/types/content";
 
@@ -93,9 +94,12 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             </span>
             <span className="tabular-nums">{year}</span>
           </p>
-          <p className="text-xs text-text-secondary">
-            {settings.firstName} {settings.lastName} · Portfolio
-          </p>
+          <div className="flex flex-col gap-1 text-xs text-text-secondary sm:items-end">
+            <LocalTime />
+            <span>
+              {settings.firstName} {settings.lastName} · Portfolio
+            </span>
+          </div>
         </div>
       </div>
     </footer>

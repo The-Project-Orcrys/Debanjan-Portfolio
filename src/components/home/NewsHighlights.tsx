@@ -48,8 +48,8 @@ export function NewsHighlights({ updates }: { updates: UpdateItem[] }) {
                 </div>
               ) : null}
               <div className="flex flex-1 flex-col p-5">
-                <span className="text-xs tabular-nums text-text-accent">
-                  {String(item.number).padStart(2, "0")}
+                <span className="text-xs uppercase tracking-widest text-text-accent">
+                  {item.period ?? `Update ${String(item.number).padStart(2, "0")}`}
                 </span>
                 <h3 className="mt-2 text-display text-lg leading-snug">
                   {item.title}

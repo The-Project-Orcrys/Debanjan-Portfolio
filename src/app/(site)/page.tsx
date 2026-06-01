@@ -3,6 +3,7 @@ import { EngagementSection } from "@/components/home/EngagementSection";
 import { FolderCTA } from "@/components/home/FolderCTA";
 import { HeroSection } from "@/components/home/HeroSection";
 import { HomeSectionNav } from "@/components/home/HomeSectionNav";
+import { ImpactMetricsStrip } from "@/components/home/ImpactMetricsStrip";
 import { LeadershipTimeline } from "@/components/home/LeadershipTimeline";
 import { NewsHighlights } from "@/components/home/NewsHighlights";
 import { PhotoCollage } from "@/components/home/PhotoCollage";
@@ -81,6 +82,7 @@ export default async function HomePage() {
         shareUrl={siteUrl}
       />
       <HomeSectionNav />
+      <ImpactMetricsStrip />
       <EngagementSection />
       <ServicesSection services={services} />
       <ProductsSection />

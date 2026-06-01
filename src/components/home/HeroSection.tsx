@@ -7,6 +7,7 @@ import { CyclingWord } from "@/components/home/CyclingWord";
 import { HeroScrollCue } from "@/components/home/HeroScrollCue";
 import { AnimatedHeroBackground } from "@/components/motion/AnimatedHeroBackground";
 import { useHeroMouseParallax } from "@/components/motion/useHeroMouseParallax";
+import { AvailabilityBadge } from "@/components/shared/AvailabilityBadge";
 import { GeometricShape } from "@/components/shared/GeometricShape";
 import { CopyTag } from "@/components/shared/CopyTag";
 import { FounderActionLinks } from "@/components/shared/FounderActionLinks";
@@ -182,6 +183,12 @@ export function HeroSection({
             <p className="hero-role-item mb-4 text-xs uppercase tracking-[0.3em] text-text-accent">
               {settings.tagline}
             </p>
+            {settings.availabilityNote ? (
+              <AvailabilityBadge
+                note={settings.availabilityNote}
+                className="hero-role-item mb-4"
+              />
+            ) : null}
             <h1 className="text-display font-normal">
               <span className="hero-name-line">{renderName(settings.firstName)}</span>
               <div className="my-3 flex items-center gap-3 text-sm text-text-secondary md:my-4">
